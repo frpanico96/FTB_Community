@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+	<types>
+		<members>FTB_Calendar__c</members>
+		<members>FTB_Championship__c</members>
+		<members>FTB_Player__c</members>
+		<members>FTB_Team__c</members>
+		<members>FTB_Trade__c</members>
+		<members>FTB_User__c</members>
+		<name>CustomObject</name>
+	</types>
+	<version>53.0</version>
+</Package>
