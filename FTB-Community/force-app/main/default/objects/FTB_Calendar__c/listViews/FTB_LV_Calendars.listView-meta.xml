@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FTB_LV_Calendars</fullName>
+    <columns>NAME</columns>
+    <columns>FTB_Championship__c</columns>
+    <columns>FTB_NumberOfGames__c</columns>
+    <columns>FTB_StartDate__c</columns>
+    <columns>FTB_EndDate__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>All Calendars</label>
+</ListView>
