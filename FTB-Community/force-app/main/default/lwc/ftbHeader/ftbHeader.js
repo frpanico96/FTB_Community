@@ -3,9 +3,11 @@
  * Generic Header for Components
  * Message is retrieved from Custom Metadata
  */
-import { LightningElement } from 'lwc';
-import FtbUtils from '../ftbUtils/ftbUtils';
+import { LightningElement, api} from 'lwc';
+
 
 export default class FtbHeader extends LightningElement {
     
+    @api headerMessage;
+
 }
