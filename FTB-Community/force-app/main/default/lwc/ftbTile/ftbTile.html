@@ -1,0 +1,32 @@
+<!--@frpanico 2022-02-06-->
+<!--FTB-->
+<!--Tile Component-->
+<template>
+    <lightning-card  title="Hello">
+        <!--Label Header Message-->
+        <div if:true={headerVisible} class="ftb-header-message"> 
+            <div class="ftb-first-message">
+                <h1 class={firstMessageStyle}>{firstMessage}</h1>
+            </div>
+            <div class="ftb-second-message">
+                <h3 class={secondMessageStyle}>{secondMessage}</h3>
+            </div>
+        </div>
+        <div if:true={buttonVisible} class="ftb-button">
+            <lightning-button 
+                class={buttonStyle}
+                label={buttonLabel} 
+                name={buttonName}
+                disable={buttonDisabled} 
+                onclick={buttonClick}></lightning-button>
+        </div>
+        <div if:true={spinnerVisible} class="ftb-spinner">
+            <lightning-spinner 
+                alternative-text={spinnerText}
+                size={spinnerSize}
+                variant={spinnerVariant}>
+            </lightning-spinner>
+            <h1 class={spinnerMessageStyle}>{spinnerMessage}</h1>
+        </div>
+    </lightning-card>
+</template>
