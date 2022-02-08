@@ -17,21 +17,29 @@ export default class FtbHeader extends LightningElement {
 
     connectedCallback()
     {
-        console.log('#ftbHeader position >>> ' +this.position);
-        console.log('#ftbHeader textStyle >>> ' +this.textStyle);
-        console.log('#ftbHeader additionalStyling >>> ' +this.additionalStyling);
-        if(this.position !== '')
+        console.log('# Header Connected #');
+    }
+    renderedCallback()
+    {
+        if(this.className == '')
         {
-            this.className += this.position;
+            console.log('#ftbHeader position >>> ' +this.position);
+            console.log('#ftbHeader textStyle >>> ' +this.textStyle);
+            console.log('#ftbHeader additionalStyling >>> ' +this.additionalStyling);
+            if(this.position !== '')
+            {
+                this.className += this.position;
+            }
+            if(this.textStyle !== '')
+            {
+                this.className += ' ' + this.textStyle;
+            }
+            if(this.additionalStyling !== '')
+            {
+                this.className += ' ' + this.additionalStyling;
+            }
         }
-        if(this.textStyle !== '')
-        {
-            this.className += ' ' + this.textStyle;
-        }
-        if(this.additionalStyling !== '')
-        {
-            this.className += ' ' + this.additionalStyling;
-        }
+        
     }
 
 }

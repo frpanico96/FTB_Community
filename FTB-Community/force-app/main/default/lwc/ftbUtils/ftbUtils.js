@@ -39,8 +39,8 @@ export default class FtbUtils extends LightningElement {
                     let wrpObject = JSON.parse(data);
                     if(data)
                     {
-                        console.log('#Data Message >>> ' + wrpObject.message);
-                        resolve(wrpObject.message);
+                        console.log('#Data Message >>> ' + wrpObject);
+                        resolve(wrpObject);
                     }
                 }
             )

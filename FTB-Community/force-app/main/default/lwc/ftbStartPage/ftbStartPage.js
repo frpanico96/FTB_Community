@@ -8,8 +8,9 @@ import FtbUtils from 'c/ftbUtils';
 export default class FtbStartPage extends FtbUtils {
 
     @track headerMessage = '';
-    @track headerPosition = 'slds-align_absolute-center';
-    @track headerTextStyle = 'slds-text-heading_large slds-text-font_monospace'
+    @track headerPosition = '';
+    @track headerTextStyle = '';
+    @track headerAdditionStyling = '';
 
     /* Need to implement promise to make the call be effective*/
     connectedCallback()
@@ -19,8 +20,15 @@ export default class FtbStartPage extends FtbUtils {
         this.getConfigurationMessage(componentName)
         .then(result => 
             {
-                this.headerMessage = result;
+                console.log('#FtbStartPage Result >>>' + JSON.stringify(result));
+                this.headerMessage = result.header.message;
+                this.headerPosition = result.header.position;
+                this.headerTextStyle = result.header.textStyle;
+                this.headerAdditionStyling = result.header.additionalStyling;
                 console.log('#HeaderMessage >>> ' + this.headerMessage);
+                console.log('#HeaderPosition >>> ' + this.headerPosition);
+                console.log('#HeaderTextStyle >>> ' + this.headerTextStyle);
+                console.log('#HeaderAdditionStyling >>> ' + this.additionalStyling)
             }
         )
         .catch(error => 

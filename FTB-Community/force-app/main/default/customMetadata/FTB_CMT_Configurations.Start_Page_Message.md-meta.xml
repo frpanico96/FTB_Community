@@ -10,12 +10,4 @@
         <field>FTB_Component__c</field>
         <value xsi:type="xsd:string">FtbStartPage</value>
     </values>
-    <values>
-        <field>FTB_Message__c</field>
-        <value xsi:type="xsd:string">FTB - The first FantaBasket powered by Salesforce</value>
-    </values>
-    <values>
-        <field>FTB_Type__c</field>
-        <value xsi:type="xsd:string">Header</value>
-    </values>
 </CustomMetadata>
