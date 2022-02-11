@@ -41,6 +41,11 @@ public with sharing class FTB_LCR_Utils extends FTB_UTL_Utils
         FTB_TextStyle__c,
         FTB_AdditionalStyling__c
         FROM FTB_HeaderConfigurations__r
+        WHERE FTB_Active__c = true),
+        (SELECT FTB_Button__c,
+        FTB_Message__c,
+        FTB_Spinner__c
+        FROM FTB_TileConfigurations__r
         WHERE FTB_Active__c = true)
         FROM FTB_CMT_Configurations__mdt
         WHERE FTB_Component__c = :componentName
