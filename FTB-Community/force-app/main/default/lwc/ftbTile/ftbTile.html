@@ -2,9 +2,9 @@
 <!--FTB-->
 <!--Tile Component-->
 <template>
-    <lightning-card  title="Hello">
+    <lightning-card class="ftb-class">
         <!--Label Header Message-->
-        <div if:true={headerVisible} class="ftb-header-message"> 
+        <div if:true={messageConfiguration} class="ftb-header-message slds-var-p-around_x-small"> 
             <div class="ftb-first-message">
                 <h1 class={firstMessageStyle}>{firstMessage}</h1>
             </div>
@@ -12,8 +12,8 @@
                 <h3 class={secondMessageStyle}>{secondMessage}</h3>
             </div>
         </div>
-        <div if:true={buttonVisible} class="ftb-button">
-            <lightning-button 
+        <div if:true={buttonConfiguration} class="ftb-button slds-clearfix slds-var-p-around_x-small">
+            <lightning-button
                 class={buttonStyle}
                 label={buttonLabel} 
                 name={buttonName}
@@ -21,13 +21,17 @@
                 variant={buttonVariant} 
                 onclick={buttonClick}></lightning-button>
         </div>
-        <div if:true={spinnerVisible} class="ftb-spinner">
-            <lightning-spinner 
-                alternative-text={spinnerText}
-                size={spinnerSize}
-                variant={spinnerVariant}>
-            </lightning-spinner>
-            <h1 class={spinnerMessageStyle}>{spinnerMessage}</h1>
+        <div if:true={spinnerVisible}>
+            <div if:true={spinnerConfiguration} class="ftb-spinner slds-is-relative slds-var-p-around_large">
+                <lightning-spinner
+                    alternative-text={spinnerText}
+                    size={spinnerSize}
+                    variant={spinnerVariant}>
+                </lightning-spinner>
+            </div>
+            <div>
+                <h1 class={spinnerMessageStyle}>{spinnerMessage}</h1>
+            </div>
         </div>
     </lightning-card>
 </template>

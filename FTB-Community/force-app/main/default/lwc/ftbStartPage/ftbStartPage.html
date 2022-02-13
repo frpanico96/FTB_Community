@@ -4,14 +4,22 @@
 <template>
     <div class="slds-theme_default">
         <!--Header-->
-        <div class="ftb-header">
+        <div class="ftb-header slds-var-p-around_xx-small">
         <c-ftb-header 
             text-style={headerTextStyle} 
             position={headerPosition} 
             header-message={headerMessage}
             additional-styling={headerAdditionStyling}></c-ftb-header>
         </div>
-        <div class="ftb-tile">
+        <div class="ftb-tile slds-var-p-around_xx-small">
+            <c-ftb-tile 
+                message-configuration={messageConfiguration}
+                button-configuration={buttonConfiguration}
+                spinner-configuration={spinnerConfiguration}
+                header-visible={headerVisible}
+                button-visible={buttonVisible}
+                spinner-visible={spinnerVisible}>
+            </c-ftb-tile>
         </div>
     </div>
 </template>

@@ -21,6 +21,7 @@ export default class FtbHeader extends LightningElement {
     }
     renderedCallback()
     {
+        console.log('# Header Rendered #');
         if(this.className == '')
         {
             console.log('#ftbHeader position >>> ' +this.position);
