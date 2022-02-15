@@ -17,9 +17,11 @@
                 class={buttonStyle}
                 label={buttonLabel} 
                 name={buttonName}
-                disable={buttonDisabled}
+                disabled={buttonDisabled}
                 variant={buttonVariant} 
-                onclick={buttonClick}></lightning-button>
+                onclick={buttonClick}>
+            </lightning-button>
+            <h3 class={secondMessageStyle}>{buttonMessage}</h3>
         </div>
         <div if:true={spinnerVisible}>
             <div if:true={spinnerConfiguration} class="ftb-spinner slds-is-relative slds-var-p-around_large">

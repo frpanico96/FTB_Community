@@ -17,6 +17,7 @@ public with sharing class FTB_WRP_Utils
             this.tile = new ConfigurationTile();
         }
     }
+    /* Configuration Header */
     public class ConfigurationHeader
     {
         /* Member Variables */
@@ -33,11 +34,14 @@ public with sharing class FTB_WRP_Utils
             this.additionalStyling = '';
         }
     }
+    /* Configuration Tile */
     public class ConfigurationTile
     {
+        /* Member Variables */
         public String message;
         public String button;
         public String spinner;
+        /* Constructor */
         public ConfigurationTile()
         {
             this.message = '';
@@ -45,6 +49,17 @@ public with sharing class FTB_WRP_Utils
             this.spinner = '';
         }
     }
-    
-
+    /* Generic Wrapper for ftbStartPage */
+    public class StartPageWrp
+    {
+        /* Member Variables */
+        public Boolean check;
+        public String message;
+        /* Constructor */
+        public StartPageWrp()
+        {
+            this.check = false;
+            this.message = '';
+        }
+    }
 }
