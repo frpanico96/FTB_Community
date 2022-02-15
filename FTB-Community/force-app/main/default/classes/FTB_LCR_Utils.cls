@@ -6,7 +6,7 @@
 public with sharing class FTB_LCR_Utils extends FTB_UTL_Utils
 {
 
-    @AuraEnabled
+    @AuraEnabled(cacheable=true)
     public static String getConfiguration(String componentName)
     {
         FTB_WRP_Utils.ConfigurationWrapper wrpConfig = new FTB_WRP_Utils.ConfigurationWrapper();
@@ -27,7 +27,7 @@ public with sharing class FTB_LCR_Utils extends FTB_UTL_Utils
         }   
         /* Utility log */
         System.debug(loggingLevel.DEBUG,'Wrapped configuration: ' + JSON.serialize(wrpConfig));
-        /* A string is returned since the wrapped object
+        /* A string is returned
         * Since the wrapped object is not recognized
         * by the client
         */

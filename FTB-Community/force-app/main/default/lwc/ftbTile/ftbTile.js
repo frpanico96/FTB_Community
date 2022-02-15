@@ -6,14 +6,16 @@ import { ingestDataConnector } from 'lightning/analyticsWaveApi';
 import { LightningElement, api, track } from 'lwc';
 
 export default class FtbTile extends LightningElement {
-
+    /* @api variables */
     @api messageConfiguration;
     @api buttonConfiguration;
     @api spinnerConfiguration;
     @api headerVisible;
     @api buttonVisible;
+    @api buttonDisabled;
+    @api buttonMessage;
     @api spinnerVisible;
-
+    /* @track variables */
     @track firstMessage = '';
     @track secondMessage = '';
     @track firstMessageStyle = '';
@@ -23,7 +25,6 @@ export default class FtbTile extends LightningElement {
     @track buttonLabel = '';
     @track buttonName = '';
     @track buttonVariant = '';
-    @track buttonDisabled = '';
     @track buttonConfigured = false;
     @track spinnerVisible = '';
     @track spinnerText = '';
@@ -32,36 +33,19 @@ export default class FtbTile extends LightningElement {
     @track spinnerMessage = '';
     @track spinnerMessageStyle = '';
     @track spinnerConfigured = false;
-
+    /* Fire a custom event when the button is clicked */
     buttonClick(event)
     {
         event.preventDefault();
         const buttonClickEvent = new CustomEvent('buttonclick',{detail:'button clicked'});
         this.dispatchEvent(buttonClickEvent);
     }
+    /* Log the connection of the component */
     connectedCallback()
     {
         console.log('# Tile Connected #');
     }
-
-    /*get messageConfiguration()
-    {
-       
-       try
-       {
-        let messageObj = JSON.parse(this.messageConfiguration);
-        console.log('#Tile_messageObj >>> ' + messageObj);
-        this.firstMessage = messageObj["firstMessage"];
-        this.secondMessage = messageObj["secondMessage"];
-        this.firstMessageStyle = messageObj["firstMessageStyle"];
-        this.secondMessageStyle = messageObj["secondMessageStyle"];
-       }
-       catch
-       {
-           console.log('Tile_ExceptionMessage');
-       }
-   }*/
-
+    /* Render Tile properties */
     renderedCallback()
     {
         console.log('# Tile Rendering #');
