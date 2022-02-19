@@ -3,34 +3,54 @@
  * Wrapper for the
  * Player Response
  */
-public with sharing class FTB_WRP_Players 
+public with sharing class FTB_WRP_Players extends FTB_WRP_Response
 {
+    public Internal internal;
     public League league;
+
+    public class Internal
+    {
+        public String pubDateTime;
+        public String igorPath;
+        public String xslt;
+        public String xsltForceRecompile;
+        public String xsltInCache;
+        public String xsltCompileTimeMillis;
+        public String xsltTransformTimeMillis;
+        public String consolidatedDomKey;
+        public String endToEndTimeMillis;
+        
+    }
     public class League
     {
-        public List<Standard> standard;
+        public List<Player> standard;
+        public List<Player> africa;
+        public List<Player> sacramento;
+        public List<Player> vegas;
+        public List<Player> utah;
+
     }
-    public class Standard
+    public class Player
     {
         public String firstName;
         public String lastName;
         public String temporaryDisplayName;
         public String personId;
         public String teamId;
-        public Integer jersey;
+        public String jersey;
         public Boolean isActive;
         public String pos;
-        public Integer heightFeet;
-        public Integer heightInches;
-        public Decimal heightMeters;
-        public Decimal weightPounds;
-        public Decimal weightKilograms;
-        public Date dateOfBirthUTC;
+        public String heightFeet;
+        public String heightInches;
+        public String heightMeters;
+        public String weightPounds;
+        public String weightKilograms;
+        public String dateOfBirthUTC;
         public TeamSitesOnly teamSitesOnly;
         public List<Team> teams;
         public Draft draft;
-        public Integer nbaDebutYear;
-        public Integer yearsPro;
+        public String nbaDebutYear;
+        public String yearsPro;
         public String collegeName;
         public String lastAffiliation;
         public String country;
@@ -45,14 +65,14 @@ public with sharing class FTB_WRP_Players
     public class Team 
     {
         public String teamId;
-        public Integer seasonStart;
-        public Integer seasonEnd;
+        public String seasonStart;
+        public String seasonEnd;
     }
     public class Draft
     {
         public String teamId;
-        public Integer pickNum;
-        public Integer roundNum;
-        public Integer seasonYear;
+        public String pickNum;
+        public String roundNum;
+        public String seasonYear;
     }
 }
