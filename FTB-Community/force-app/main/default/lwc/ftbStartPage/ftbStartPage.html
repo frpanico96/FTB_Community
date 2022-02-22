@@ -1,0 +1,28 @@
+<!--@frpanico 2022-02-06-->
+<!--FTB-->
+<!--Start Page Component-->
+<template>
+    <div class="slds-theme_default">
+        <!--Header-->
+        <div class="ftb-header slds-var-p-around_xx-small">
+        <c-ftb-header 
+            text-style={headerTextStyle} 
+            position={headerPosition} 
+            header-message={headerMessage}
+            additional-styling={headerAdditionStyling}></c-ftb-header>
+        </div>
+        <div class="ftb-tile slds-var-p-around_xx-small">
+            <c-ftb-tile 
+                message-configuration={messageConfiguration}
+                button-configuration={buttonConfiguration}
+                spinner-configuration={spinnerConfiguration}
+                header-visible={headerVisible}
+                button-visible={buttonVisible}
+                button-disabled={buttonDisabled}
+                button-message={buttonMessage}
+                spinner-visible={spinnerVisible}
+                onbuttonclick={generatePlayers}>
+            </c-ftb-tile>
+        </div>
+    </div>
+</template>

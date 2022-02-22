@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
+    <brand>
+        <headerColor>#0070D2</headerColor>
+        <shouldOverrideOrgTheme>false</shouldOverrideOrgTheme>
+    </brand>
+    <description>FTB Salesforce App</description>
+    <formFactors>Small</formFactors>
+    <formFactors>Large</formFactors>
+    <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
+    <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+    <label>FTB - Fanta Basket</label>
+    <navType>Standard</navType>
+    <tabs>FTB_StartPage</tabs>
+    <tabs>FTB_User__c</tabs>
+    <tabs>FTB_Player__c</tabs>
+    <tabs>FTB_Championship__c</tabs>
+    <tabs>FTB_Calendar__c</tabs>
+    <tabs>FTB_Team__c</tabs>
+    <tabs>FTB_Trade__c</tabs>
+    <uiType>Lightning</uiType>
+    <utilityBar>FTB_Fanta_Basket_UtilityBar</utilityBar>
+</CustomApplication>

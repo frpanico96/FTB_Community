@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>FTB_LV_Teams</fullName>
+    <columns>NAME</columns>
+    <columns>FTB_ShortName__c</columns>
+    <columns>FTB_User__c</columns>
+    <columns>FTB_Championship__c</columns>
+    <columns>FTB_WinLoss__c</columns>
+    <columns>Ranking__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>All Trades</label>
+</ListView>

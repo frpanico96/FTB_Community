@@ -1,0 +1,39 @@
+<!--@frpanico 2022-02-06-->
+<!--FTB-->
+<!--Tile Component-->
+<template>
+    <lightning-card class="ftb-class">
+        <!--Label Header Message-->
+        <div if:true={messageConfiguration} class="ftb-header-message slds-var-p-around_x-small"> 
+            <div class="ftb-first-message">
+                <h1 class={firstMessageStyle}>{firstMessage}</h1>
+            </div>
+            <div class="ftb-second-message">
+                <h3 class={secondMessageStyle}>{secondMessage}</h3>
+            </div>
+        </div>
+        <div if:true={buttonConfiguration} class="ftb-button slds-clearfix slds-var-p-around_x-small">
+            <lightning-button
+                class={buttonStyle}
+                label={buttonLabel} 
+                name={buttonName}
+                disabled={buttonDisabled}
+                variant={buttonVariant} 
+                onclick={buttonClick}>
+            </lightning-button>
+            <h3 class={secondMessageStyle}>{buttonMessage}</h3>
+        </div>
+        <div if:true={spinnerVisible}>
+            <div if:true={spinnerConfiguration} class="ftb-spinner slds-is-relative slds-var-p-around_large">
+                <lightning-spinner
+                    alternative-text={spinnerText}
+                    size={spinnerSize}
+                    variant={spinnerVariant}>
+                </lightning-spinner>
+            </div>
+            <div>
+                <h1 class={spinnerMessageStyle}>{spinnerMessage}</h1>
+            </div>
+        </div>
+    </lightning-card>
+</template>
