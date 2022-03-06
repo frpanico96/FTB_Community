@@ -58,4 +58,13 @@ public virtual with sharing class FTB_UTL_Utils {
     {
         return readSObject(new List<SObject>{sobj});
     }
+
+    /* This method maps field coming from integration to SObject */
+    /* It takes in input the service and the response to map */
+    /* Queries the custom metadata FTB_FieldMapper__mdt */
+    /* Return instances of the SObject to map */
+    protected List<SObject> mapFields(String service, FTB_WRP_Response response)
+    {
+        
+    }
 }
