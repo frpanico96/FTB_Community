@@ -5,6 +5,8 @@
 */
 public virtual with sharing class FTB_UTL_Utils {
 
+    private static FTB_QR_Utils utilsQr = new FTB_QR_Utils();
+
     /* Update Methods */
     protected void updateSObject(List<SObject> sobjList)
     {
@@ -63,8 +65,84 @@ public virtual with sharing class FTB_UTL_Utils {
     /* It takes in input the service and the response to map */
     /* Queries the custom metadata FTB_FieldMapper__mdt */
     /* Return instances of the SObject to map */
-    protected List<SObject> mapFields(String service, FTB_WRP_Response response)
+    protected List<SObject> mapFields(String service, List<Map<String,String>> integrationObjList)
     {
-        
+        List<FTB_FieldMapper__mdt> mapperList = new List<FTB_FieldMapper__mdt>();
+        List<SObject> sobjList = new List<SObject>();
+
+        mapperList = utilsQr.getMapper(service);
+        for(Map<String,String> integrationObj : integrationObjList)
+        {
+            /* Instance SObject map */
+            SObject sobj = null;
+            for(FTB_FieldMapper__mdt mapper : mapperList)
+            {
+                /* Get Schema of the SObject and of all fields to check the type */
+                Schema.SObjectType sobjType = Schema.getGlobalDescribe().get(mapper.FTB_ObjectName__c);
+                Map<String,Schema.SObjectField> fieldsSchema = sobjType.getDescribe().fields.getMap();
+                Schema.SoapType soapType = fieldsSchema.get(mapper.FTB_SfdcField__c).getDescribe().getSoapType();
+                /* Populate the map */
+                if(String.isNotBlank(mapper.FTB_IntegrationField__c) && String.isNotBlank(mapper.FTB_SfdcField__c))
+                {
+                    /* Concatenation makes sens only if the field is a String */
+                    if(String.isNotBlank(mapper.FTB_CharacterLink__c))
+                    {
+                        sobj.put((String)integrationObj.get(mapper.FTB_IntegrationField__c),tryParse(mapper.FTB_SfdcField__c, soapType) + mapper.FTB_CharacterLink__c + ' ');
+                    }
+                }
+            }
+            sobjList.add(sobj);
+        }
+        return sobjList;
     }
+    
+    protected Object tryParse(Object field, Schema.SoapType soapType)
+    {
+        Object result = null; 
+        try
+        {
+            if(soapType == Schema.SoapType.DATE)
+            {
+                result =  dateConverter(field);
+            }
+            else if(soapType == Schema.SoapType.INTEGER)
+            {
+                result = integerConverter(field);
+            }
+            else if(soapType == Schema.SoapType.DOUBLE)
+            {
+                result = doubleConverter(field);
+            }
+            else if(soapType == Schema.SoapType.STRING)
+            {
+                result = stringConverted(field);
+            }
+            else
+            {
+                result = null;
+            }
+        }
+        catch(Exception e)
+        {
+            System.debug(LoggingLevel.DEBUG, 'Exception: ' + e.getMessage() + ' during conversion');
+        }
+        return result;
+    }
+    private Date dateConverter(Object field)
+    {
+        return Date.valueOf(field);
+    }
+    private Integer integerConverter(Object field)
+    {
+        return Integer.valueOf(field);
+    }
+    private Double doubleConverter(Object field)
+    {
+        return Double.valueOf(field);
+    }
+    private String stringConverted(Object field)
+    {
+        return String.valueOf(field);
+    }
+
 }
