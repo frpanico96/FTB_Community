@@ -1,0 +1,14 @@
+Name,FTB_ObjectName__c,FTB_IntegrationField__c,FTB_SfdcField__c,FTB_CharacterLink__c,FTB_Service__c
+Player_Config_1,FTB_Player__c,firstName,FTB_FirstName__c,,players
+Player_Config_2,FTB_Player__c,lastName,FTB_LastName__c,,players
+Player_Config_3,FTB_Player__c,personId,FTB_PersonId__c,,players
+Player_Config_4,FTB_Player__c,teamId,FTB_TeamId__c,,players
+Player_Config_5,FTB_Player__c,jersey,FTB_Jersey__c,,players
+Player_Config_6,FTB_Player__c,isActive,FTB_IsActive__c,,players
+Player_Config_7,FTB_Player__c,pos,FTB_Position__c,,players
+Player_Config_8,FTB_Player__c,heightFeet,FTB_Height__c,ft,players
+Player_Config_9,FTB_Player__c,heightInches,FTB_Height__c,inch,players
+Player_Config_10,FTB_Player__c,heightMeters,FTB_HeightEu__c,,players
+Player_Config_11,FTB_Player__c,weightPounds,FTB_WeightPounds__c,,players
+Player_Config_12,FTB_Player__c,weightKilograms,FTB_WeightKg__c,,players
+Player_Config_13,FTB_Player__c,dateOfBirthUTC,FTB_DateOfBirth__c,,players
