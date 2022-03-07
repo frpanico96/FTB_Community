@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>Player_Config_2</label>
+    <label>Player_Config_8</label>
     <protected>false</protected>
     <values>
         <field>FTB_CharacterLink__c</field>
+        <value xsi:type="xsd:string">ft</value>
+    </values>
+    <values>
+        <field>FTB_FieldType__c</field>
         <value xsi:nil="true"/>
     </values>
     <values>
         <field>FTB_IntegrationField__c</field>
-        <value xsi:type="xsd:string">lastName</value>
+        <value xsi:type="xsd:string">heightFeet</value>
     </values>
     <values>
         <field>FTB_ObjectName__c</field>
@@ -20,6 +24,6 @@
     </values>
     <values>
         <field>FTB_SfdcField__c</field>
-        <value xsi:type="xsd:string">FTB_LastName__c</value>
+        <value xsi:type="xsd:string">FTB_Height__c</value>
     </values>
 </CustomMetadata>
