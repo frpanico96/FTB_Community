@@ -31,5 +31,16 @@ public with sharing class FTB_LC_StartPage extends FTB_UTL_Utils
         }
         return JSON.serialize(startPageWrp);
     }
+    /* Core Method
+    * the method performs the callout
+    * and creates the players
+    */
+    @AuraEnabled
+    public static String createPlayers(String service)
+    {
+        FTB_WS_Integration integration = new FTB_WS_Integration(FTB_ENM_Service.valueOf(service));
+        Map<String,String> integrationResult = integration.execute();
+        return JSON.serialize(integrationResult);
+    }
 
 }
