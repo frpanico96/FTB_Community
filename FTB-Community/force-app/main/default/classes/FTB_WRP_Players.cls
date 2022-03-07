@@ -38,7 +38,7 @@ public with sharing class FTB_WRP_Players extends FTB_WRP_Response
         public String personId;
         public String teamId;
         public String jersey;
-        public Boolean isActive;
+        public String isActive;
         public String pos;
         public String heightFeet;
         public String heightInches;

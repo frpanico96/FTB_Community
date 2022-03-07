@@ -65,17 +65,17 @@ public virtual with sharing class FTB_UTL_Utils {
     /* It takes in input the service and the response to map */
     /* Queries the custom metadata FTB_FieldMapper__mdt */
     /* Return instances of the SObject to map */
-    protected List<SObject> mapFields(String service, List<Map<String,String>> integrationObjList)
+   protected List<SObject> mapFields(String service, List<Map<String,String>> integrationObjList)
     {
-        List<FTB_FieldMapper__mdt> mapperList = new List<FTB_FieldMapper__mdt>();
+        List<FTB_CMT_FieldMapper__mdt> mapperList = new List<FTB_CMT_FieldMapper__mdt>();
         List<SObject> sobjList = new List<SObject>();
 
         mapperList = utilsQr.getMapper(service);
         for(Map<String,String> integrationObj : integrationObjList)
         {
             /* Instance SObject map */
-            SObject sobj = null;
-            for(FTB_FieldMapper__mdt mapper : mapperList)
+            SObject sobj = Schema.getGlobalDescribe().get(mapperList[0].FTB_ObjectName__c).newSObject();
+            for(FTB_CMT_FieldMapper__mdt mapper : mapperList)
             {
                 /* Get Schema of the SObject and of all fields to check the type */
                 Schema.SObjectType sobjType = Schema.getGlobalDescribe().get(mapper.FTB_ObjectName__c);
@@ -87,7 +87,11 @@ public virtual with sharing class FTB_UTL_Utils {
                     /* Concatenation makes sens only if the field is a String */
                     if(String.isNotBlank(mapper.FTB_CharacterLink__c))
                     {
-                        sobj.put((String)integrationObj.get(mapper.FTB_IntegrationField__c),tryParse(mapper.FTB_SfdcField__c, soapType) + mapper.FTB_CharacterLink__c + ' ');
+                        sobj.put(mapper.FTB_SfdcField__c,tryParse(integrationObj.get(mapper.FTB_IntegrationField__c), soapType) + mapper.FTB_CharacterLink__c + ' ');
+                    }
+                    else
+                    {
+                        sobj.put(mapper.FTB_SfdcField__c,tryParse(integrationObj.get(mapper.FTB_IntegrationField__c), soapType));
                     }
                 }
             }
@@ -98,33 +102,39 @@ public virtual with sharing class FTB_UTL_Utils {
     
     protected Object tryParse(Object field, Schema.SoapType soapType)
     {
-        Object result = null; 
+        Object result; 
         try
         {
-            if(soapType == Schema.SoapType.DATE)
-            {
-                result =  dateConverter(field);
-            }
-            else if(soapType == Schema.SoapType.INTEGER)
-            {
-                result = integerConverter(field);
-            }
-            else if(soapType == Schema.SoapType.DOUBLE)
-            {
-                result = doubleConverter(field);
-            }
-            else if(soapType == Schema.SoapType.STRING)
-            {
-                result = stringConverted(field);
-            }
-            else
-            {
-                result = null;
+            switch on soapType{
+                when DATE
+                {
+                    result =  dateConverter(field);
+                }
+                when INTEGER
+                {
+                    result = integerConverter(field);
+                }
+                when DOUBLE
+                {
+                    result = doubleConverter(field);
+                }
+                when STRING
+                {
+                    result = stringConverted(field);
+                }
+                when BOOLEAN
+                {
+                    result = booleanConverter(field);
+                }
+                when else
+                {
+                    result = null;
+                }
             }
         }
         catch(Exception e)
         {
-            System.debug(LoggingLevel.DEBUG, 'Exception: ' + e.getMessage() + ' during conversion');
+            //System.debug(LoggingLevel.DEBUG, 'Exception: ' + e.getMessage() + ' during conversion');
         }
         return result;
     }
@@ -143,6 +153,10 @@ public virtual with sharing class FTB_UTL_Utils {
     private String stringConverted(Object field)
     {
         return String.valueOf(field);
+    }
+    private Boolean booleanConverter(Object field)
+    {
+        return Boolean.valueOf(field);
     }
 
 }
