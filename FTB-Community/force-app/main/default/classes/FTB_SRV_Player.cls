@@ -3,7 +3,7 @@
  * Core class linked to the Object
  * FTB_Player__c
  */
-public with sharing class FTB_SRV_Player extends FTB_UTL_Utils implements FTB_INF_FetchData,Queueable 
+public with sharing class FTB_SRV_Player extends FTB_UTL_Utils implements FTB_INF_FetchData
 {
     /* Member variables */
     private FTB_ENM_Service service = FTB_ENM_Service.GET_PLAYERS;
@@ -50,13 +50,13 @@ public with sharing class FTB_SRV_Player extends FTB_UTL_Utils implements FTB_IN
         try
         {
             players = mapFields(String.valueOf(this.service), playerInfos);
-            if(!players.isEmpty())
+            /*if(!players.isEmpty())
             {
                 insertSObject(players);
                 integrationResult.put('error','PLAYER_SUCCESS');
                 integrationResult.put('errorcode','PLR-0000');
 
-            }
+            }*/
         }
         catch(Exception e)
         {
