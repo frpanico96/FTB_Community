@@ -65,40 +65,40 @@ public virtual with sharing class FTB_UTL_Utils {
     /* It takes in input the service and the response to map */
     /* Queries the custom metadata FTB_FieldMapper__mdt */
     /* Return instances of the SObject to map */
-   protected List<SObject> mapFields(String service, List<Map<String,String>> integrationObjList)
-    {
-        List<FTB_CMT_FieldMapper__mdt> mapperList = new List<FTB_CMT_FieldMapper__mdt>();
-        List<SObject> sobjList = new List<SObject>();
+//    protected List<SObject> mapFields(String service, List<Map<String,String>> integrationObjList)
+//     {
+//         List<FTB_CMT_FieldMapper__mdt> mapperList = new List<FTB_CMT_FieldMapper__mdt>();
+//         List<SObject> sobjList = new List<SObject>();
 
-        mapperList = utilsQr.getMapper(service);
-        for(Map<String,String> integrationObj : integrationObjList)
-        {
-            /* Instance SObject map */
-            SObject sobj = Schema.getGlobalDescribe().get(mapperList[0].FTB_ObjectName__c).newSObject();
-            for(FTB_CMT_FieldMapper__mdt mapper : mapperList)
-            {
-                /* Get Schema of the SObject and of all fields to check the type */
-                Schema.SObjectType sobjType = Schema.getGlobalDescribe().get(mapper.FTB_ObjectName__c);
-                Map<String,Schema.SObjectField> fieldsSchema = sobjType.getDescribe().fields.getMap();
-                Schema.SoapType soapType = fieldsSchema.get(mapper.FTB_SfdcField__c).getDescribe().getSoapType();
-                /* Populate the map */
-                if(String.isNotBlank(mapper.FTB_IntegrationField__c) && String.isNotBlank(mapper.FTB_SfdcField__c))
-                {
-                    /* Concatenation makes sens only if the field is a String */
-                    if(String.isNotBlank(mapper.FTB_CharacterLink__c))
-                    {
-                        sobj.put(mapper.FTB_SfdcField__c,tryParse(integrationObj.get(mapper.FTB_IntegrationField__c), soapType) + mapper.FTB_CharacterLink__c + ' ');
-                    }
-                    else
-                    {
-                        sobj.put(mapper.FTB_SfdcField__c,tryParse(integrationObj.get(mapper.FTB_IntegrationField__c), soapType));
-                    }
-                }
-            }
-            sobjList.add(sobj);
-        }
-        return sobjList;
-    }
+//         mapperList = utilsQr.getMapper(service);
+//         for(Map<String,String> integrationObj : integrationObjList)
+//         {
+//             /* Instance SObject map */
+//             SObject sobj = Schema.getGlobalDescribe().get(mapperList[0].FTB_ObjectName__c).newSObject();
+//             for(FTB_CMT_FieldMapper__mdt mapper : mapperList)
+//             {
+//                 /* Get Schema of the SObject and of all fields to check the type */
+//                 Schema.SObjectType sobjType = Schema.getGlobalDescribe().get(mapper.FTB_ObjectName__c);
+//                 Map<String,Schema.SObjectField> fieldsSchema = sobjType.getDescribe().fields.getMap();
+//                 Schema.SoapType soapType = fieldsSchema.get(mapper.FTB_SfdcField__c).getDescribe().getSoapType();
+//                 /* Populate the map */
+//                 if(String.isNotBlank(mapper.FTB_IntegrationField__c) && String.isNotBlank(mapper.FTB_SfdcField__c))
+//                 {
+//                     /* Concatenation makes sens only if the field is a String */
+//                     if(String.isNotBlank(mapper.FTB_CharacterLink__c))
+//                     {
+//                         sobj.put(mapper.FTB_SfdcField__c,tryParse(integrationObj.get(mapper.FTB_IntegrationField__c), soapType) + mapper.FTB_CharacterLink__c + ' ');
+//                     }
+//                     else
+//                     {
+//                         sobj.put(mapper.FTB_SfdcField__c,tryParse(integrationObj.get(mapper.FTB_IntegrationField__c), soapType));
+//                     }
+//                 }
+//             }
+//             sobjList.add(sobj);
+//         }
+//         return sobjList;
+//     }
     
     protected Object tryParse(Object field, Schema.SoapType soapType)
     {
