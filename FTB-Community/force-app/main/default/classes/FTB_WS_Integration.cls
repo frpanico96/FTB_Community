@@ -21,10 +21,9 @@ public with sharing class FTB_WS_Integration
     * It returns a Map<String,String> with all the details of the integrations
     * TBD: keys
     */
-    public Map<String,String> execute()
+    public FTB_WRP_OperationResult execute()
     {
         /* Method variable */
-        Map<String,String> integrationResult = new Map<String,String>();
         String bodyResponse = '';
         Http http = new Http();
         HttpRequest request = new HttpRequest();
@@ -33,6 +32,12 @@ public with sharing class FTB_WS_Integration
         * and collect the endpoint
         */
         Map<String,String> integrationMap = getIntegrationInfos(this.service);
+        
+        if(integrationMap.get('ERROR_CODE') != null)
+        {
+            return new FTB_WRP_OperationResult(integrationMap.get('ERROR_CODE'),integrationMap.get('ERROR_DESCRIPTION'));
+        }
+        
         FTB_INF_FetchData dataFetcher = (FTB_INF_FetchData)Type.forName(integrationMap.get('classname')).newInstance();
 
         /* Start service callout */
@@ -50,16 +55,10 @@ public with sharing class FTB_WS_Integration
             System.debug('Error: ' + e.getMessage() + '. At line: ' + e.getLineNumber() + '. The error occured during the service callout: ' + this.service);
             bodyResponse = 'INTEGRATION_ERROR';
             response = null;
-            integrationResult.put('error',bodyResponse);
-            integrationResult.put('errorcode','INT-0002');
+            return new FTB_WRP_OperationResult('INT-0002',bodyResponse);
         }
 
-        if(response != null)
-        {
-            integrationResult = dataFetcher.handleResponse(response.getBody());
-        }
-
-        return integrationResult;
+        return dataFetcher.handleResponse(response.getBody());
 
     }
     /* getIntegrationInfos converts the enum in a className
@@ -84,8 +83,8 @@ public with sharing class FTB_WS_Integration
         }
         if(integrationMap.isEmpty())
         {
-            integrationMap.put('error','Could not fetch integration configurations');
-            integrationMap.put('errorcode','INT-0001');
+            integrationMap.put('ERROR_DESCRIPTION','Could not fetch integration configurations');
+            integrationMap.put('ERROR_CODE','INT-0001');
         }
         return integrationMap;
     }

@@ -14,4 +14,9 @@ public with sharing class FTB_QR_Utils extends FTB_UTL_Utils
         FROM FTB_CMT_FieldMapper__mdt
         WHERE FTB_Service__c = :service]);
     }
+    public List<ListView> getListView(String objectName, String developerNameBase)
+    {
+        String likeFilter = developerNameBase + '%';
+        return readSObject([SELECT DeveloperName FROM ListView WHERE SobjectType = :objectName AND DeveloperName LIKE :likeFilter]);
+    }
 }

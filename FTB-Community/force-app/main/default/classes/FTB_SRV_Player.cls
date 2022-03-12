@@ -16,12 +16,10 @@ public with sharing class FTB_SRV_Player extends FTB_UTL_Utils implements FTB_IN
         return '';
     }
     /* The method get mapped data */
-    public Map<String,String> handleResponse(String bodyResponse)
+    public FTB_WRP_OperationResult handleResponse(String bodyResponse)
     {
-        /* Variables Declaration */
-        Map<String,String> integrationResult = new Map<String,String>();
-        
-        List<Map<String,String>> playerInfos = new List<Map<String,String>>();
+        /* Variables Declaration */        
+        List<FTB_WRP_Scope> playerInfos = new List<FTB_WRP_Scope>();
         List<SObject> players = new List<SObject>();
     
         /* Deserialize response */
@@ -32,6 +30,7 @@ public with sharing class FTB_SRV_Player extends FTB_UTL_Utils implements FTB_IN
         for(FTB_WRP_Players.Player singlePlayer : ((FTB_WRP_Players)response).League.standard)
         {
             Map<String,String> playerInfo = new Map<String,String>();
+            FTB_WRP_Scope playerInfoScope = new FTB_WRP_Scope();
             playerInfo.put('firstName',singlePlayer.firstName);
             playerInfo.put('lastName',singlePlayer.lastName);
             playerInfo.put('personId',singlePlayer.personId);
@@ -45,29 +44,73 @@ public with sharing class FTB_SRV_Player extends FTB_UTL_Utils implements FTB_IN
             playerInfo.put('weightPounds',singlePlayer.weightPounds);
             playerInfo.put('weightKilograms',singlePlayer.weightKilograms);
             playerInfo.put('dateOfBirthUTC',singlePlayer.dateOfBirthUTC);
-            playerInfos.add(playerInfo);
+            playerInfoScope.integrationObj = playerInfo;
+            playerInfos.add(playerInfoScope);
         }
         
         Id batchJobId = Database.executeBatch(new FTB_BA_MassiveOperations(playerInfos,String.valueOf(this.service)), 100);
 
-        // try
-        // {
-        //     players = mapFields(String.valueOf(this.service), playerInfos);
-        //     /*if(!players.isEmpty())
-        //     {
-        //         insertSObject(players);
-        //         integrationResult.put('error','PLAYER_SUCCESS');
-        //         integrationResult.put('errorcode','PLR-0000');
+        if(batchJobId != null && String.isNotBlank(batchJobId))
+        {
+            return new FTB_WRP_OperationResult('PLR-0000','SUCCESS');
+        }
+        else
+        {
+            return new FTB_WRP_OperationResult('PLR-0001','Failure during operation start');
+        }
+    }
+    /* Method that maps and create
+    * instances of Players
+    * and insert them
+    * This method gets called from the batch
+    * MassiveOperations
+    */
+    public void operate(List<FTB_WRP_Scope> scope)
+    {
+        List<FTB_CMT_FieldMapper__mdt> mapperList = new List<FTB_CMT_FieldMapper__mdt>();
+        List<SObject> sobjList = new List<SObject>();
+        FTB_QR_Utils utilsQr = new FTB_QR_Utils();
 
-        //     }*/
-        // }
-        // catch(Exception e)
-        // {
-        //     System.debug('Error: ' + e.getMessage() + '. At line: ' + e.getLineNumber() + '. The error occured during execution of: ' + this.service);
-        //     integrationResult.put('error','PLAYERS_ERROR');
-        //     integrationResult.put('errorcode','PLR-0001');
-        // }
-
-        return integrationResult;
+        mapperList = utilsQr.getMapper(String.valueOf(this.service));
+        for(FTB_WRP_Scope singleScope : scope)
+        {
+            /* Instance SObject map */
+            SObject sobj = Schema.getGlobalDescribe().get(mapperList[0].FTB_ObjectName__c).newSObject();
+            for(FTB_CMT_FieldMapper__mdt mapper : mapperList)
+            {
+                /* Get Schema of the SObject and of all fields to check the type */
+                Schema.SObjectType sobjType = Schema.getGlobalDescribe().get(mapper.FTB_ObjectName__c);
+                Map<String,Schema.SObjectField> fieldsSchema = sobjType.getDescribe().fields.getMap();
+                Schema.SoapType soapType = fieldsSchema.get(mapper.FTB_SfdcField__c).getDescribe().getSoapType();
+                /* Populate the map */
+                if(String.isNotBlank(mapper.FTB_IntegrationField__c) && String.isNotBlank(mapper.FTB_SfdcField__c))
+                {
+                    /* Write the field only if the integration field value is no empty */
+                    if(String.isNotEmpty(singleScope.integrationObj.get(mapper.FTB_IntegrationField__c))){
+                        /* Concatenation makes sens only if the field is a String */
+                        if(String.isNotBlank(mapper.FTB_CharacterLink__c))
+                        {
+                            if(String.isEmpty((String)sobj.get(mapper.FTB_SfdcField__c)))
+                            {
+                                sobj.put(mapper.FTB_SfdcField__c,tryParse(singleScope.integrationObj.get(mapper.FTB_IntegrationField__c), soapType) + mapper.FTB_CharacterLink__c + ' ');
+                            }
+                            else
+                            {
+                                sobj.put(mapper.FTB_SfdcField__c,((String)sobj.get(mapper.FTB_SfdcField__c))+(tryParse(singleScope.integrationObj.get(mapper.FTB_IntegrationField__c), soapType) + mapper.FTB_CharacterLink__c));
+                            }
+                        }
+                        else
+                        {
+                            sobj.put(mapper.FTB_SfdcField__c,tryParse(singleScope.integrationObj.get(mapper.FTB_IntegrationField__c), soapType));
+                        }
+                    }
+                }
+            }
+            sobjList.add(sobj);
+        }
+        if(!sobjList.isEmpty())
+        {
+            insertSObject(sobjList);
+        }
     }
 }

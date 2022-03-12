@@ -11,7 +11,7 @@ public virtual with sharing class FTB_UTL_Utils {
     protected void updateSObject(List<SObject> sobjList)
     {
         SObjectAccessDecision securityDecision = Security.stripInaccessible(AccessType.UPDATABLE, sobjList);
-        update (securityDecision.getRecords()); 
+        Database.update(securityDecision.getRecords()); 
     }
     protected void updateSObject(SObject sobj)
     {
@@ -22,7 +22,7 @@ public virtual with sharing class FTB_UTL_Utils {
     protected void insertSObject(List<SObject> sobjList)
     {
         SObjectAccessDecision securityDecision = Security.stripInaccessible(AccessType.CREATABLE, sobjList);
-        insert (securityDecision.getRecords());
+        Database.insert(securityDecision.getRecords());
     }
     protected void insertSObject(SObject sobj)
     {
@@ -42,7 +42,7 @@ public virtual with sharing class FTB_UTL_Utils {
         }
         if(!sobjDelete.isEmpty())
         {
-            delete sobjDelete;
+            Database.delete(sobjDelete);
         }
     }
     protected void deleteSObject(SObject sobj)
@@ -61,45 +61,6 @@ public virtual with sharing class FTB_UTL_Utils {
         return readSObject(new List<SObject>{sobj});
     }
 
-    /* This method maps field coming from integration to SObject */
-    /* It takes in input the service and the response to map */
-    /* Queries the custom metadata FTB_FieldMapper__mdt */
-    /* Return instances of the SObject to map */
-//    protected List<SObject> mapFields(String service, List<Map<String,String>> integrationObjList)
-//     {
-//         List<FTB_CMT_FieldMapper__mdt> mapperList = new List<FTB_CMT_FieldMapper__mdt>();
-//         List<SObject> sobjList = new List<SObject>();
-
-//         mapperList = utilsQr.getMapper(service);
-//         for(Map<String,String> integrationObj : integrationObjList)
-//         {
-//             /* Instance SObject map */
-//             SObject sobj = Schema.getGlobalDescribe().get(mapperList[0].FTB_ObjectName__c).newSObject();
-//             for(FTB_CMT_FieldMapper__mdt mapper : mapperList)
-//             {
-//                 /* Get Schema of the SObject and of all fields to check the type */
-//                 Schema.SObjectType sobjType = Schema.getGlobalDescribe().get(mapper.FTB_ObjectName__c);
-//                 Map<String,Schema.SObjectField> fieldsSchema = sobjType.getDescribe().fields.getMap();
-//                 Schema.SoapType soapType = fieldsSchema.get(mapper.FTB_SfdcField__c).getDescribe().getSoapType();
-//                 /* Populate the map */
-//                 if(String.isNotBlank(mapper.FTB_IntegrationField__c) && String.isNotBlank(mapper.FTB_SfdcField__c))
-//                 {
-//                     /* Concatenation makes sens only if the field is a String */
-//                     if(String.isNotBlank(mapper.FTB_CharacterLink__c))
-//                     {
-//                         sobj.put(mapper.FTB_SfdcField__c,tryParse(integrationObj.get(mapper.FTB_IntegrationField__c), soapType) + mapper.FTB_CharacterLink__c + ' ');
-//                     }
-//                     else
-//                     {
-//                         sobj.put(mapper.FTB_SfdcField__c,tryParse(integrationObj.get(mapper.FTB_IntegrationField__c), soapType));
-//                     }
-//                 }
-//             }
-//             sobjList.add(sobj);
-//         }
-//         return sobjList;
-//     }
-    
     protected Object tryParse(Object field, Schema.SoapType soapType)
     {
         Object result; 
@@ -140,7 +101,7 @@ public virtual with sharing class FTB_UTL_Utils {
     }
     private Date dateConverter(Object field)
     {
-        return Date.valueOf(field);
+        return Date.valueOf(String.valueOf(field));
     }
     private Integer integerConverter(Object field)
     {
