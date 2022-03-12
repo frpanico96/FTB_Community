@@ -39,8 +39,19 @@ public with sharing class FTB_LC_StartPage extends FTB_UTL_Utils
     public static String createPlayers(String service)
     {
         FTB_WS_Integration integration = new FTB_WS_Integration(FTB_ENM_Service.valueOf(service));
-        Map<String,String> integrationResult = integration.execute();
+        FTB_WRP_OperationResult integrationResult = integration.execute();
         return JSON.serialize(integrationResult);
+    }
+    @AuraEnabled
+    public static string getListView(String objectName, String developerNameBase){
+        FTB_QR_Utils utilsQr = new FTB_QR_Utils();
+        List<ListView> listViews = utilsQr.getListView(objectName,developerNameBase);
+        String result = '';
+        if(!listViews.isEmpty())
+        {
+            result = listViews[0].DeveloperName;
+        }
+        return result;
     }
 
 }

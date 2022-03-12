@@ -1,56 +1,60 @@
-public with sharing class FTB_BA_MassiveOperations extends FTB_UTL_Utils implements Database.Batchable<Map<String,String>>{
+public with sharing class FTB_BA_MassiveOperations extends FTB_UTL_Utils implements Database.Batchable<FTB_WRP_Scope>{
     
-    private List<Map<String,String>> integrationObjectList = new List<Map<String,String>>();
+    private List<FTB_WRP_Scope> integrationObjectList = new List<FTB_WRP_Scope>();
     private String service;
+    private FTB_INF_FetchData classInstance;
     
-    public FTB_BA_MassiveOperations(List<Map<String,String>> integrationObjectList, String service) 
+    public FTB_BA_MassiveOperations(List<FTB_WRP_Scope> integrationObjectList, String service) 
     {
         this.integrationObjectList = integrationObjectList;
         this.service = service;
+        List<FTB_CMT_IntegrationConfiguration__mdt> integrationConfigurations = readSObject([SELECT 
+        Id, 
+        FTB_ClassName__c 
+        FROM 
+        FTB_CMT_IntegrationConfiguration__mdt 
+        WHERE FTB_EnumService__c = :service]);
+        if(!integrationConfigurations.isEmpty())
+        {
+            this.classInstance = (FTB_INF_FetchData)Type.forName(integrationConfigurations[0].FTB_ClassName__c).newInstance();
+        }
     }
 
-    public Iterable<Map<String,String>> start(Database.BatchableContext BC)
+    public Iterable<FTB_WRP_Scope> start(Database.BatchableContext BC)
     {
         return this.integrationObjectList;
     }
-    public void execute(Database.BatchableContext BC, List<Map<String,String>> scope)
+    public void execute(Database.BatchableContext BC, List<FTB_WRP_Scope> scope)
     {
-        List<FTB_CMT_FieldMapper__mdt> mapperList = new List<FTB_CMT_FieldMapper__mdt>();
-        List<SObject> sobjList = new List<SObject>();
-        FTB_QR_Utils utilsQr = new FTB_QR_Utils();
-
-        mapperList = utilsQr.getMapper(this.service);
-        for(Map<String,String> integrationObj : scope)
-        {
-            /* Instance SObject map */
-            SObject sobj = Schema.getGlobalDescribe().get(mapperList[0].FTB_ObjectName__c).newSObject();
-            for(FTB_CMT_FieldMapper__mdt mapper : mapperList)
-            {
-                /* Get Schema of the SObject and of all fields to check the type */
-                Schema.SObjectType sobjType = Schema.getGlobalDescribe().get(mapper.FTB_ObjectName__c);
-                Map<String,Schema.SObjectField> fieldsSchema = sobjType.getDescribe().fields.getMap();
-                Schema.SoapType soapType = fieldsSchema.get(mapper.FTB_SfdcField__c).getDescribe().getSoapType();
-                /* Populate the map */
-                if(String.isNotBlank(mapper.FTB_IntegrationField__c) && String.isNotBlank(mapper.FTB_SfdcField__c))
-                {
-                    /* Concatenation makes sens only if the field is a String */
-                    if(String.isNotBlank(mapper.FTB_CharacterLink__c))
-                    {
-                        sobj.put(mapper.FTB_SfdcField__c,tryParse(integrationObj.get(mapper.FTB_IntegrationField__c), soapType) + mapper.FTB_CharacterLink__c + ' ');
-                    }
-                    else
-                    {
-                        sobj.put(mapper.FTB_SfdcField__c,tryParse(integrationObj.get(mapper.FTB_IntegrationField__c), soapType));
-                    }
-                }
-            }
-            sobjList.add(sobj);
-        }
-        if(!sobjList.isEmpty())
-        {
-            insertSObject(sobjList);
-        }
+        this.classInstance.operate(scope);
     }
-    public void finish(Database.BatchableContext BC){}
+    /* When the Job Finished a platform event is fired
+    * to notificate the success
+    */
+    public void finish(Database.BatchableContext BC)
+    {
+        List<AsyncApexJob> jobs = readSObject([SELECT Id, 
+        Status, 
+        NumberOfErrors, 
+        JobItemsProcessed, 
+        TotalJobItems, 
+        Createdby.Email, 
+        ExtendedStatus
+        FROM AsyncApexJob
+        WHERE Id = :BC.getJobId()]);
+
+        AsyncApexJob job = jobs[0];
+
+        String message = 'Status: ' + job.Status + ' Errors: ' + job.NumberOfErrors + ' Job Run: ' + job.JobItemsProcessed;
+
+        FTB_WRP_OperationResult opResult = new FTB_WRP_OperationResult('PLR-0000', message);
+        
+        FTB_PEV_NotificationMessage__e notification = new FTB_PEV_NotificationMessage__e();
+        notification.FTB_SerializedMessage__c = JSON.serialize(opResult);
+        notification.FTB_Service__c = this.service;
+
+        Eventbus.publish(notification);
+
+    }
 
 }

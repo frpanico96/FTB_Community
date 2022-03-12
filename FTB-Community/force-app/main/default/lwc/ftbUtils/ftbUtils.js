@@ -4,11 +4,11 @@
  */
 import { LightningElement, api, track } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-
+import { NavigationMixin } from 'lightning/navigation'
 /* Server imports */
 import getConfiguration from '@salesforce/apex/FTB_LCR_Utils.getConfiguration';
 
-export default class FtbUtils extends LightningElement {
+export default class FtbUtils extends NavigationMixin(LightningElement) {
 
     /**@frpanico 2022-02-06
      * FTB
@@ -58,15 +58,27 @@ export default class FtbUtils extends LightningElement {
      * ShowMessage handler
      */
     @api
-    showMessage(title,message,variant)
+    showMessage(title,message,variant,mode='dismissible')
     {
+        console.log('event dispatching - START');
         const event = new ShowToastEvent(
             {
                 title: title,
                 message: message,
                 variant: variant,
+                mode: mode
             }
         )
+        this.dispatchEvent(event);
+        console.log('event dispatching - END');
+    }
+    /* Custom Navigation Method */
+    @api
+    handleNavigation(navigationObjSer)
+    {
+        console.log(navigationObjSer);
+        let navigationObj = JSON.parse(navigationObjSer);
+        this[NavigationMixin.Navigate](navigationObj);
     }
 
 

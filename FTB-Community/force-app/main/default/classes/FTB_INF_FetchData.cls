@@ -15,6 +15,11 @@ public interface FTB_INF_FetchData
     */
     String setBody();
     /* handleResponse handle the response */
-    Map<String,String> handleResponse(String bodyResponse);
+    FTB_WRP_OperationResult handleResponse(String bodyResponse);
+    /* Method that get eventually called
+    * From the batch 
+    * if asynchronous operation are needed
+    */
+    void operate(List<FTB_WRP_Scope> scope);
 
 }
