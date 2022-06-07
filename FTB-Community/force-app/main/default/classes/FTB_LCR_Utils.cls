@@ -20,9 +20,12 @@ public with sharing class FTB_LCR_Utils extends FTB_UTL_Utils
             wrpConfig.header.textStyle = configuration.FTB_HeaderConfigurations__r[0].FTB_TextStyle__c;
             wrpConfig.header.additionalStyling = configuration.FTB_HeaderConfigurations__r[0].FTB_AdditionalStyling__c;
             /* Tile Assignments */
-            wrpConfig.tile.message = configuration.FTB_TileConfigurations__r[0].FTB_Message__c;
-            wrpConfig.tile.button = configuration.FTB_TileConfigurations__r[0].FTB_Button__c;
-            wrpConfig.tile.spinner = configuration.FTB_TileConfigurations__r[0].FTB_Spinner__c;
+            if(!configuration.FTB_TileConfigurations__r.isEmpty())
+            {
+                wrpConfig.tile.message = configuration.FTB_TileConfigurations__r[0].FTB_Message__c;
+                wrpConfig.tile.button = configuration.FTB_TileConfigurations__r[0].FTB_Button__c;
+                wrpConfig.tile.spinner = configuration.FTB_TileConfigurations__r[0].FTB_Spinner__c;
+            }
             break;
         }   
         /* Utility log */
