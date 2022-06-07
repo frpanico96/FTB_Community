@@ -1,0 +1,44 @@
+<template>
+    <div class="ftb-form">
+        <div class="ftb-input">
+            <!--username-->
+            <lightning-input
+                class="slds-var-p-around_xx-small"
+                type="text" 
+                value={username} 
+                name="username"
+                label="Username:"
+                required="true">
+            </lightning-input>
+            <!--password-->
+            <lightning-input
+                class="slds-var-p-around_xx-small"
+                type="text" 
+                value={password} 
+                name="password"
+                label="Password:"
+                required="true">
+            </lightning-input>
+        </div>
+        <div class="slds-var-p-around_xx-small buttons slds-grid slds-gutters">
+            <div class="slds-align_absolute-center slds-col slds-size_1-of-2">
+                <lightning-button
+                    class="slds-button slds-button_stretch"
+                    name="signUp"
+                    label="Sign Up"
+                    variant="brand-outline"
+                    onclick={handleClick}>
+                </lightning-button>
+            </div>
+            <div class="slds-align_absolute-center slds-col slds-size_1-of-2">
+                <lightning-button
+                    class="slds-button"
+                    name="signIn"
+                    label="Sign In"
+                    variant="brand"
+                    onclick={handleClick}>
+                </lightning-button>
+            </div>
+        </div>
+    </div>
+</template>
