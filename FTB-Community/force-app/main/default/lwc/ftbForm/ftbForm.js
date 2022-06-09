@@ -5,6 +5,7 @@ export default class FtbForm extends LightningElement
     handleClick = event =>
     {
         event.preventDefault();
-        console.log('#FtbForm catched login#')
+        console.log('#FtbForm catched login >>> ' + event.currentTarget.name);
+        console.log('#FtbForm catched login >>> ' + event.target.name);
     }
 }

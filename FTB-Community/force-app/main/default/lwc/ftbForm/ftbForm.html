@@ -1,44 +1,48 @@
 <template>
     <div class="ftb-form">
-        <div class="ftb-input">
-            <!--username-->
-            <lightning-input
-                class="slds-var-p-around_xx-small"
-                type="text" 
-                value={username} 
-                name="username"
-                label="Username:"
-                required="true">
-            </lightning-input>
-            <!--password-->
-            <lightning-input
-                class="slds-var-p-around_xx-small"
-                type="text" 
-                value={password} 
-                name="password"
-                label="Password:"
-                required="true">
-            </lightning-input>
-        </div>
-        <div class="slds-var-p-around_xx-small buttons slds-grid slds-gutters">
-            <div class="slds-align_absolute-center slds-col slds-size_1-of-2">
-                <lightning-button
-                    class="slds-button slds-button_stretch"
-                    name="signUp"
-                    label="Sign Up"
-                    variant="brand-outline"
-                    onclick={handleClick}>
-                </lightning-button>
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_1-of-3"></div>
+            <div class="slds-col slds-size_1-of-3">
+                <lightning-card title="Join The Community" icon-name="standard:trailhead_alt">
+                    <div class="slds-var-p-around_large slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-1">
+                        <lightning-input
+                            type="text" 
+                            value={username} 
+                            name="username"
+                            label="Username:"
+                            required="true">
+                        </lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1">
+                        <lightning-input
+                            type="text" 
+                            value={password} 
+                            name="password"
+                            label="Password:"
+                            required="true">
+                        </lightning-input>
+                    </div>
+                    <div class="slds-var-p-around_small slds-col slds-size_1-of-2">
+                        <button 
+                            class="slds-button slds-button_brand slds-button_stretch"
+                            name="signIn"
+                            onclick={handleClick}>
+                                <label></label>Sign In
+                        </button>
+                    </div>
+                    <div class="slds-var-p-around_small slds-col slds-size_1-of-2">
+                        <button 
+                            class="slds-button slds-button_outline-brand slds-button_stretch"
+                            name="signUp"
+                            onclick={handleClick}>
+                                <label></label>Sign Up
+                        </button>
+                    </div>
+                    </div> 
+                </lightning-card>
             </div>
-            <div class="slds-align_absolute-center slds-col slds-size_1-of-2">
-                <lightning-button
-                    class="slds-button"
-                    name="signIn"
-                    label="Sign In"
-                    variant="brand"
-                    onclick={handleClick}>
-                </lightning-button>
-            </div>
+            <div class="slds-col slds-size_1-of-3"></div>
         </div>
     </div>
 </template>
