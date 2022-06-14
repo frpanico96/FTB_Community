@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Login Page - Header</label>
+    <protected>true</protected>
+    <values>
+        <field>FTB_Active__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
+        <field>FTB_AdditionalStyling__c</field>
+        <value xsi:type="xsd:string">slds-p-around_xx-small</value>
+    </values>
+    <values>
+        <field>FTB_Configuration__c</field>
+        <value xsi:type="xsd:string">Login_Page_Message</value>
+    </values>
+    <values>
+        <field>FTB_Message__c</field>
+        <value xsi:type="xsd:string">FTB - The first FantaBasket powered by Salesforce</value>
+    </values>
+    <values>
+        <field>FTB_Position__c</field>
+        <value xsi:type="xsd:string">slds-align_absolute-center</value>
+    </values>
+    <values>
+        <field>FTB_TextStyle__c</field>
+        <value xsi:type="xsd:string">slds-text-heading_large slds-text-font_monospace</value>
+    </values>
+</CustomMetadata>

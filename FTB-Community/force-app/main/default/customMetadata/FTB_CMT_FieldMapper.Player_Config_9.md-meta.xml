@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>FTB_CharacterLink__c</field>
-        <value xsi:type="xsd:string">inch</value>
+        <value xsi:type="xsd:string">inch.</value>
     </values>
     <values>
         <field>FTB_FieldType__c</field>
@@ -20,7 +20,7 @@
     </values>
     <values>
         <field>FTB_Service__c</field>
-        <value xsi:type="xsd:string">players</value>
+        <value xsi:type="xsd:string">GET_PLAYERS</value>
     </values>
     <values>
         <field>FTB_SfdcField__c</field>
