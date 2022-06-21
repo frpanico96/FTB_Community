@@ -3,7 +3,7 @@
  * Controller for
  * LWC ftbUtils
  */
-public with sharing class FTB_LCR_Utils extends FTB_UTL_Utils
+public with sharing class FTB_LC_Utils extends FTB_UTL_Utils
 {
 
     @AuraEnabled(cacheable=true)
