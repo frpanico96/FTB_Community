@@ -45,4 +45,9 @@ export default class FtbLogin extends FtbUtils
             this.showMessage(NOTIFICATION_ERROR_TITLE,JSON.stringify(error),NOTIFICATION_ERROR_VARIANT);
         })
     }
+    /* Login */
+    handleLogin = event => 
+    {
+        console.log('### start login ###')
+    }
 }
