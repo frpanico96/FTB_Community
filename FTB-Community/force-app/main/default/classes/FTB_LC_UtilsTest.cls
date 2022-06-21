@@ -1,10 +1,10 @@
 /**@frpanico 2022-05-26
  * FTB
- * FTB_QR_Utils
+ * FTB_LC_Utils
  * Test class
  */
 @isTest
-public with sharing class FTB_LCR_UtilsTest 
+public with sharing class FTB_LC_UtilsTest 
 {
     @TestSetup
     static void setup()
@@ -17,7 +17,7 @@ public with sharing class FTB_LCR_UtilsTest
         String componentName = 'FtbStartPage';
         String result = '';
         Test.startTest();
-            result = FTB_LCR_Utils.getConfiguration(componentName);
+            result = FTB_LC_Utils.getConfiguration(componentName);
         Test.stopTest();
         System.assertEquals(true, String.isNotBlank(result),'get configuration failed');
     }

@@ -5,15 +5,11 @@
         <visible>true</visible>
     </applicationVisibilities>
     <classAccesses>
-        <apexClass>FTB_LCR_Utils</apexClass>
+        <apexClass>FTB_LC_Utils</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>FTB_UTL_Utils</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>FTB_WebService</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <customMetadataTypeAccesses>
@@ -84,11 +80,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>FTB_Formation__c.FTB_Team__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>FTB_Player__c.FTB_Role__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

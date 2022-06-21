@@ -6,7 +6,7 @@ import { LightningElement, api, track } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { NavigationMixin } from 'lightning/navigation'
 /* Server imports */
-import getConfiguration from '@salesforce/apex/FTB_LCR_Utils.getConfiguration';
+import getConfiguration from '@salesforce/apex/FTB_LC_Utils.getConfiguration';
 
 export default class FtbUtils extends NavigationMixin(LightningElement) {
 
