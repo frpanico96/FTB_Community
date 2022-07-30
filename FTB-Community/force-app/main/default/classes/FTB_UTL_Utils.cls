@@ -128,4 +128,16 @@ public virtual with sharing class FTB_UTL_Utils {
         return Boolean.valueOf(field);
     }
 
+    @TestVisible
+    protected String generateSessionId(String credentials)
+    {
+        String initVector = 'FTB______INITVEC';
+        Blob exampleIv = Blob.valueOf(initVector);
+        Blob key = Crypto.generateAesKey(128);
+        Blob data = Blob.valueOf(credentials);
+        Blob encrypted = Crypto.encrypt('AES128', key, exampleIv, data);
+        String sessionId = JSON.serialize(encrypted);
+        return sessionId;
+    }
+
 }

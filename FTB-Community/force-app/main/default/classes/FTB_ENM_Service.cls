@@ -5,5 +5,6 @@
  */
 public enum FTB_ENM_Service 
 {
-    GET_PLAYERS
+    GET_PLAYERS,
+    SIGN
 }
