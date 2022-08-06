@@ -21,10 +21,14 @@ export default class FtbForm extends LightningElement
     handleClick = event =>
     {
         event.preventDefault();
-        const eventName = event.target.name === 'signUp' ? 'startregister' : 'startlogin';
+
+        console.log('### Event clicked ' + event.target.name);
+
+        const eventName = 'sign';
         const obj = {};
         obj['username'] = this.username;
         obj['password'] = this.password;
+        obj['signtype'] = event.target.name;
         const customEvent = new CustomEvent(eventName,{detail: JSON.stringify(obj)});
         this.dispatchEvent(customEvent);
 

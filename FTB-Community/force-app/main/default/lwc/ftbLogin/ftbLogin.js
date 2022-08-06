@@ -3,14 +3,20 @@
  * Start Page Component
  */
 import { LightningElement, api, track } from 'lwc';
+import { subscribe,unsubscribe,onError,setDebugFlag,isEmpEnabled } from 'lightning/empApi';
 /* Import Utils Component */
 import FtbUtils from 'c/ftbUtils';
 /* Class import */
-import makeLogin from '@salesforce/apex/FTB_LC_Login.makeLogin';
-import makeRegister from '@salesforce/apex/FTB_LC_Login.makeRegister';
+import makeRegisterLogin from '@salesforce/apex/FTB_LC_Login.makeRegisterLogin';
 /* Notification messages constants */
 const NOTIFICATION_ERROR_TITLE = 'Error';
 const NOTIFICATION_ERROR_VARIANT = 'error';
+
+const NOTIFICATION_SUCCESS_TITLE = 'Success';
+const NOTIFICATION_SUCCESS_VARIANT = 'success';
+const NOTIFICATION_SUCCESS_MODE = 'pester';
+
+const PEV_CHANNEL = '/event/FTB_PEV_NotificationMessage__e';
 
 export default class FtbLogin extends FtbUtils 
 {
@@ -40,6 +46,10 @@ export default class FtbLogin extends FtbUtils
                 this.messageConfiguration = result.tile.message;
                 this.buttonConfiguration = result.tile.button;
                 this.spinnerConfiguration = result.tile.spinner;
+                /* Event Attachment */
+                //this.registerErrorListener();
+                //this.handleSubscribe();
+
             }
         )
         .catch(error => 
@@ -47,33 +57,77 @@ export default class FtbLogin extends FtbUtils
             this.showMessage(NOTIFICATION_ERROR_TITLE,JSON.stringify(error),NOTIFICATION_ERROR_VARIANT);
         })
     }
-    /* Login */
-    handleLogin = event => 
+    makeRegisterLogin = event =>
     {
-        console.log('### start login ###');
-        makeLogin({credentials: event.detail})
-        .then(result => 
+        const credentials = event.detail;
+        makeRegisterLogin({credentials: credentials})
+        .catch(error => 
             {
-                console.log('### SuccessResult >>> ' + result);
-            })
-        .catch(error =>
-            {
-                console.log('### ErrorResult >>> ' + JSON.stringify(error));
-            })
+                this.showMessage('Error!',error,'error');
+            }
+        )
     }
-    handleRegister = event =>
+
+    handleLogin = sessionId =>
     {
-        console.log('### start register ###');
-        makeRegister({credentials: event.detail})
-        .then(result => 
+        console.log('Work In Progress');
+        console.log('Navigation Mixin');
+    }
+
+    /* Event Methods */
+
+    handleSubscribeEvent = (event) => 
+    {
+        console.log('### Subscribe Event => ' + JSON.stringify(event));
+    }
+
+    registerErrorListener()
+    {
+        onError((error) => {console.log('#FTBStartPage_ErorrListener >>> ' + JSON.stringify(error))});
+    }
+    handleSubscribe()
+    {
+        console.log('### Starting Event Attachment');
+        /* Callback definition */
+        const messageCallback = (response) => 
+        {
+            console.log('#FTBStartPage_SubscriptionCallBack >>> ' + JSON.stringify(response));
+            /* Structure: {"data" : "schema":"", "payload":{platform event record} } */
+            console.log('#FTBStartPage_SerializedResult >>> ' + response["data"]["payload"]["FTB_SerializedMessage__c"]);
+            let serializedResult = response["data"]["payload"]["FTB_SerializedMessage__c"];
+            let resultObj = JSON.parse(serializedResult);
+            this.spinnerVisible = false;
+            if(resultObj["SUCCESS"] === true)
             {
-                //this.handleLogin(event);
+                this.showMessage(NOTIFICATION_SUCCESS_TITLE,resultObj["ERROR_MESSAGE"],NOTIFICATION_SUCCESS_VARIANT,NOTIFICATION_SUCCESS_MODE);
+                this.handleLogin();
+            }
+            else
+            {
+                this.showMessage(NOTIFICATION_ERROR_TITLE,resultObj["ERROR_MESSAGE"],NOTIFICATION_ERROR_VARIANT);
+                console.log('Enable Button Again');
+                
+            }
+            this.handleUnsubscribe();
+        }
+        console.log('### Starting Subscription');
+        subscribe(PEV_CHANNEL, -1, messageCallback)
+        .then(response => 
+            {
+                console.log('#FTBStartPage_SubscriptionSent >>> ' +JSON.stringify(response.channel));
+                this.subscription = response;
             }
         )
         .catch(error => 
-          {
-            console.log('### ErrorResult >>> ' + JSON.stringify(error));
-          }  
-        );
+            {
+                console.log('#FTBStartPage_SubscriptionError >>> ' + JSON.stringify(error));
+            }
+        )
     }
+    handleUnsubscribe()
+    {
+        unsubscribe(this.subscription, (response) => { console.log('#FTBStartPage_Unsubscription >>> ' + JSON.stringify(response))});
+    }
+
+
 }
