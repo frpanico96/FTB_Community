@@ -49,8 +49,6 @@ export default class FtbLogin extends FtbUtils
                 this.buttonConfiguration = result.tile.button;
                 this.spinnerConfiguration = result.tile.spinner;
                 /* Event Attachment */
-                //this.registerErrorListener();
-                //this.handleSubscribe();
                 this.handleCometdSubscription();
 
 
@@ -100,66 +98,4 @@ export default class FtbLogin extends FtbUtils
         console.log('Work In Progress');
         console.log('Navigation Mixin');
     }
-
-    /* Event Methods */
-
-    handleSubscribeEvent = (event) => 
-    {
-        console.log('### Subscribe Event => ' + JSON.stringify(event));
-        let response = JSON.parse(event.detail.data.payload.FTB_SerializedMessage__c);
-        console.log(response.SUCCESS);
-        console.log(response.ERROR_MESSAGE);
-        console.log(response.ERROR_DESCRIPTION);
-        console.log(response.ERROR_CODE);
-    }
-
-    registerErrorListener()
-    {
-        onError((error) => {console.log('#FTBStartPage_ErorrListener >>> ' + JSON.stringify(error))});
-    }
-    handleSubscribe()
-    {
-        console.log('### Starting Event Attachment');
-        /* Callback definition */
-        const messageCallback = (response) => 
-        {
-            console.log('#FTBStartPage_SubscriptionCallBack >>> ' + JSON.stringify(response));
-            /* Structure: {"data" : "schema":"", "payload":{platform event record} } */
-            console.log('#FTBStartPage_SerializedResult >>> ' + response["data"]["payload"]["FTB_SerializedMessage__c"]);
-            let serializedResult = response["data"]["payload"]["FTB_SerializedMessage__c"];
-            let resultObj = JSON.parse(serializedResult);
-            this.spinnerVisible = false;
-            if(resultObj["SUCCESS"] === true)
-            {
-                this.showMessage(NOTIFICATION_SUCCESS_TITLE,resultObj["ERROR_MESSAGE"],NOTIFICATION_SUCCESS_VARIANT,NOTIFICATION_SUCCESS_MODE);
-                this.handleLogin();
-            }
-            else
-            {
-                this.showMessage(NOTIFICATION_ERROR_TITLE,resultObj["ERROR_MESSAGE"],NOTIFICATION_ERROR_VARIANT);
-                console.log('Enable Button Again');
-                
-            }
-            this.handleUnsubscribe();
-        }
-        console.log('### Starting Subscription');
-        subscribe(PEV_CHANNEL, -1, messageCallback)
-        .then(response => 
-            {
-                console.log('#FTBStartPage_SubscriptionSent >>> ' +JSON.stringify(response.channel));
-                this.subscription = response;
-            }
-        )
-        .catch(error => 
-            {
-                console.log('#FTBStartPage_SubscriptionError >>> ' + JSON.stringify(error));
-            }
-        )
-    }
-    handleUnsubscribe()
-    {
-        unsubscribe(this.subscription, (response) => { console.log('#FTBStartPage_Unsubscription >>> ' + JSON.stringify(response))});
-    }
-
-
 }
