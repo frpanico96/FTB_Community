@@ -14,6 +14,7 @@ export default class FtbCometD extends LightningElement
   @track error; 
 
 
+  /*
   @wire(getSessionId)
   wiredSessionId({error, data})
   {
@@ -33,11 +34,20 @@ export default class FtbCometD extends LightningElement
       this.sessionId = undefined;
     }
   }
+  */
+  
+  @api
+  cometdCallback = (sessionId) =>
+  {
+    console.log('SessionId => ' + sessionId);
+    this.sessionId = sessionId;
+    loadScript(this, cometdLwc)
+    .then(() => {this.initializeCometD()});
+  }
 
   initializeCometD = () => 
   {
     console.log('Initizalization');
-
     if(this.libInitialized) return;
 
     this.libInitialized = true;
@@ -54,10 +64,13 @@ export default class FtbCometD extends LightningElement
     cometdLib.handshake((status) => 
     {
       console.log('Channel Name   ', this.channel);
+      console.log('Status => ' + status.successful);
       if(status.successful)
       {
-        cometdLib.subscribe('/event/'+this.channel, (message) => 
+        cometdLib.subscribe(this.channel, (message) => 
         {
+          console.log('### Subscribing')
+          console.log('STATUSObj => ' + JSON.stringify(message));
           const selectedEvent = new CustomEvent('subscribemessage', {detail: message});
           this.dispatchEvent(selectedEvent);
         });

@@ -8,6 +8,8 @@ import { subscribe,unsubscribe,onError,setDebugFlag,isEmpEnabled } from 'lightni
 import FtbUtils from 'c/ftbUtils';
 /* Class import */
 import makeRegisterLogin from '@salesforce/apex/FTB_LC_Login.makeRegisterLogin';
+import handleCometdSubscription from '@salesforce/apex/FTB_LC_Login.handleCometdSubscription';
+import StayInTouchSignature from '@salesforce/schema/User.StayInTouchSignature';
 /* Notification messages constants */
 const NOTIFICATION_ERROR_TITLE = 'Error';
 const NOTIFICATION_ERROR_VARIANT = 'error';
@@ -49,6 +51,8 @@ export default class FtbLogin extends FtbUtils
                 /* Event Attachment */
                 //this.registerErrorListener();
                 //this.handleSubscribe();
+                this.handleCometdSubscription();
+
 
             }
         )
@@ -57,12 +61,35 @@ export default class FtbLogin extends FtbUtils
             this.showMessage(NOTIFICATION_ERROR_TITLE,JSON.stringify(error),NOTIFICATION_ERROR_VARIANT);
         })
     }
+
+    handleCometdSubscription = () => 
+    {
+        handleCometdSubscription()
+        .then(data => 
+        {
+            console.log('LoginResponse => ' + data);
+            const cometDInitializer = this.template.querySelector('c-ftb-comet-d');
+            cometDInitializer.cometdCallback(data);
+        })
+        .catch(error => 
+            {
+                console.log(error);
+                this.showMessage('Error!',error,'error');
+            }
+        )
+    }
+
     makeRegisterLogin = event =>
     {
         const credentials = event.detail;
         makeRegisterLogin({credentials: credentials})
+        .then(data => 
+        {
+            console.log('LoginResponse => ' + data);
+        })
         .catch(error => 
             {
+                console.log(error);
                 this.showMessage('Error!',error,'error');
             }
         )
@@ -79,6 +106,11 @@ export default class FtbLogin extends FtbUtils
     handleSubscribeEvent = (event) => 
     {
         console.log('### Subscribe Event => ' + JSON.stringify(event));
+        let response = JSON.parse(event.detail.data.payload.FTB_SerializedMessage__c);
+        console.log(response.SUCCESS);
+        console.log(response.ERROR_MESSAGE);
+        console.log(response.ERROR_DESCRIPTION);
+        console.log(response.ERROR_CODE);
     }
 
     registerErrorListener()
