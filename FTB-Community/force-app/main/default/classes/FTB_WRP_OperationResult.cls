@@ -20,6 +20,7 @@ public with sharing class FTB_WRP_OperationResult
     public String ERROR_DESCRIPTION {get;set;}
     public Boolean SUCCESS{get;set;}
     public String ERROR_MESSAGE{get;set;}
+    public String IDENTIFICATION_KEY{get; set;}
 
     public FTB_WRP_OperationResult(String errorCode, String errorDescription) 
     {
@@ -27,6 +28,14 @@ public with sharing class FTB_WRP_OperationResult
         this.ERROR_DESCRIPTION = errorDescription;
         this.SUCCESS = isSuccess();
         this.ERROR_MESSAGE = messageFormatter();
+    }
+    public FTB_WRP_OperationResult(String errorCode, String errorDescription, String identificationKey) 
+    {
+        this.ERROR_CODE = errorCode;
+        this.ERROR_DESCRIPTION = errorDescription;
+        this.SUCCESS = isSuccess();
+        this.ERROR_MESSAGE = messageFormatter();
+        this.IDENTIFICATION_KEY = identificationKey;
     }
     /* The method isSuccess
     * check wether the ERROR_CODE

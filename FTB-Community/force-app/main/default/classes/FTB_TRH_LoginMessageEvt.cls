@@ -21,21 +21,24 @@ public with sharing class FTB_TRH_LoginMessageEvt extends FTB_TRH_TriggerHandler
         newUser.FTB_Username__c = credentials.get('username');
         newUser.FTB_Password__c = credentials.get('password');
         Boolean isSignIn = credentials.get('signtype')?.equalsIgnoreCase('signIn');
+        String queueId = credentials.get('queueId');
         
 
         List<FTB_User__c> existingUsers = readSObject([SELECT Id,FTB_Password__c FROM FTB_User__c WHERE FTB_Username__c = :newUser.FTB_Username__c]);
         // LOG-0002 REGISTER WITH EXISTING USER
         if(!isSignIn && !existingUsers.isEmpty())
         {
-            notification.FTB_SerializedMessage__c = JSON.serialize(new FTB_WRP_OperationResult(ERROR_REGISTRATION_CODE, ERROR_REGISTRATION_MESSAGE));
+            notification.FTB_SerializedMessage__c = serializedMessage(ERROR_REGISTRATION_CODE, ERROR_REGISTRATION_MESSAGE, newUser.FTB_Username__c);
             Eventbus.publish(notification);
+            dequeue(queueId);
             return;
         }
         // LOG-0001 LOGIN WITHOUT EXISTING USER
         if(isSignIn && existingUsers.isEmpty())
         {
-            notification.FTB_SerializedMessage__c = JSON.serialize(new FTB_WRP_OperationResult(ERROR_LOGIN_CODE, ERROR_LOGIN_MESSAGE));
+            notification.FTB_SerializedMessage__c = serializedMessage(ERROR_LOGIN_CODE, ERROR_LOGIN_MESSAGE, newUser.FTB_Username__c);
             Eventbus.publish(notification);
+            dequeue(queueId);
             return;
         }
         //LOGIN WITH EXISTING USER
@@ -44,15 +47,16 @@ public with sharing class FTB_TRH_LoginMessageEvt extends FTB_TRH_TriggerHandler
             // LOG-0000 SUCCESS LOGIN
             if(newUser.FTB_Password__c.equalsIgnoreCase(existingUsers[0].FTB_Password__c))
             {
-                String sessionId = '';
-                notification.FTB_SerializedMessage__c = JSON.serialize(new FTB_WRP_OperationResult(SUCCESS_CODE, sessionId));
+                String sessionId = (loginUtl.generateUserSession(existingUsers[0].Id, newUser.FTB_Username__c)).FTB_SessionId__c;
+                notification.FTB_SerializedMessage__c = serializedMessage(SUCCESS_CODE, sessionId, newUser.FTB_Username__c);
             }
             // LOG-0001 FAILED LOGIN
             else
             {
-                notification.FTB_SerializedMessage__c = JSON.serialize(new FTB_WRP_OperationResult(ERROR_LOGIN_CODE, ERROR_LOGIN_MESSAGE));
+                notification.FTB_SerializedMessage__c = serializedMessage(ERROR_LOGIN_CODE, ERROR_LOGIN_MESSAGE, newUser.FTB_Username__c);
             }
             Eventbus.publish(notification);
+            dequeue(queueId);
             return;
         }
         insertSObject(newUser);
@@ -63,12 +67,22 @@ public with sharing class FTB_TRH_LoginMessageEvt extends FTB_TRH_TriggerHandler
 
         insertSObject(newSession);
 
-        FTB_Queue__c workedQueue = new FTB_Queue__c(Id = credentials.get('queueId'));
-        deleteSObject(workedQueue);
+        dequeue(queueId);
 
-        notification.FTB_SerializedMessage__c = JSON.serialize(new FTB_WRP_OperationResult(SUCCESS_CODE, newSession.FTB_SessionId__c));
+        notification.FTB_SerializedMessage__c = serializedMessage(SUCCESS_CODE, newSession.FTB_SessionId__c, newUser.FTB_Username__c);  
 
         Eventbus.publish(notification);
+    }
+
+    private void dequeue(String queueId)
+    {
+        FTB_Queue__c workedQueue = new FTB_Queue__c(Id = queueId);
+        deleteSObject(workedQueue);
+    }
+
+    private String serializedMessage(String code, String message, String identificationKey)
+    {
+        return JSON.serialize(new FTB_WRP_OperationResult(code, message, identificationKey));
     }
 
 }

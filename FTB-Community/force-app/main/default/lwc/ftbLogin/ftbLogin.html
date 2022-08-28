@@ -11,7 +11,10 @@
             style="color: aliceblue;">
         </c-ftb-header>
     </div>
-    <div class="ftb-login-form">
+    <div if:true={loadingSpinner}>
+        <lightning-spinner  class="ftb-loading-spinner" alternative-text="Loading..." size="medium"></lightning-spinner>
+    </div>
+    <div if:false={loadingSpinner} class="ftb-login-form">
         <c-ftb-form
             onsign={makeRegisterLogin}>
         </c-ftb-form>

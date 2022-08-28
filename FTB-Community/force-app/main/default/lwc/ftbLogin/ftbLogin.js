@@ -29,6 +29,9 @@ export default class FtbLogin extends FtbUtils
     @track headerPosition = '';
     @track headerTextStyle = '';
     @track headerAdditionStyling = '';
+    /* State Variables */
+    @track username = '';
+    @track loadingSpinner = false;
     /* connected callback */
     connectedCallback()
     {
@@ -79,7 +82,10 @@ export default class FtbLogin extends FtbUtils
 
     makeRegisterLogin = event =>
     {
+        this.loadingSpinner = true;
         const credentials = event.detail;
+        let obj = JSON.parse(credentials);
+        this.username = obj["username"];
         makeRegisterLogin({credentials: credentials})
         .then(data => 
         {
@@ -93,9 +99,38 @@ export default class FtbLogin extends FtbUtils
         )
     }
 
+    /* Event Methods */
+    handleSubscribeEvent = (event) => 
+    {
+        console.log('### Subscribe Event => ' + JSON.stringify(event));
+        let response = JSON.parse(event.detail.data.payload.FTB_SerializedMessage__c);
+        console.log(response.SUCCESS);
+        console.log(response.ERROR_MESSAGE);
+        console.log(response.ERROR_DESCRIPTION);
+        console.log(response.ERROR_CODE);
+        console.log(response.IDENTIFICATION_KEY);
+        console.log(this.username);
+        this.loadingSpinner = false;
+        if(this.username !== response.IDENTIFICATION_KEY) return;
+        if(response.SUCCESS)
+        {
+            this.showMessage(NOTIFICATION_SUCCESS_TITLE, response.ERROR_MESSAGE, NOTIFICATION_SUCCESS_VARIANT, NOTIFICATION_SUCCESS_MODE);
+        }
+        else
+        {
+            this.showMessage(NOTIFICATION_ERROR_TITLE, response.ERROR_DESCRIPTION, NOTIFICATION_ERROR_VARIANT);
+        }
+        return;
+
+    }
+
+
     handleLogin = sessionId =>
     {
         console.log('Work In Progress');
         console.log('Navigation Mixin');
     }
+
+
+
 }
