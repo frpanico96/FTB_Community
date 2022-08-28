@@ -3,7 +3,7 @@
  * Utility class
  * for common operations
 */
-public virtual with sharing class FTB_UTL_Utils {
+public virtual with sharing class FTB_UTL_Utils{
 
     private static FTB_QR_Utils utilsQr = new FTB_QR_Utils();
 
