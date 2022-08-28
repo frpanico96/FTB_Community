@@ -47,7 +47,16 @@ public with sharing class FTB_TRH_LoginMessageEvt extends FTB_TRH_TriggerHandler
             // LOG-0000 SUCCESS LOGIN
             if(newUser.FTB_Password__c.equalsIgnoreCase(existingUsers[0].FTB_Password__c))
             {
-                String sessionId = (loginUtl.generateUserSession(existingUsers[0].Id, newUser.FTB_Username__c)).FTB_SessionId__c;
+                List<FTB_Session__c> userSessions = [SELECT Id,FTB_SessionId__c FROM FTB_Session__c WHERE FTB_IsActive__c = true];
+                String sessionId;
+                if(userSessions.isEmpty())
+                {
+                    sessionId = (loginUtl.generateUserSession(existingUsers[0].Id, newUser.FTB_Username__c)).FTB_SessionId__c;
+                }
+                else
+                {
+                    sessionId = userSessions[0].FTB_SessionId__c;
+                }
                 notification.FTB_SerializedMessage__c = serializedMessage(SUCCESS_CODE, sessionId, newUser.FTB_Username__c);
             }
             // LOG-0001 FAILED LOGIN
@@ -80,9 +89,9 @@ public with sharing class FTB_TRH_LoginMessageEvt extends FTB_TRH_TriggerHandler
         deleteSObject(workedQueue);
     }
 
-    private String serializedMessage(String code, String message, String identificationKey)
+    private String serializedMessage(String code, String description, String identificationKey)
     {
-        return JSON.serialize(new FTB_WRP_OperationResult(code, message, identificationKey));
+        return JSON.serialize(new FTB_WRP_OperationResult(code, description, identificationKey));
     }
 
 }

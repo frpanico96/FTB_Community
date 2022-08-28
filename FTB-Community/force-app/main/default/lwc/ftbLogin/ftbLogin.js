@@ -115,10 +115,11 @@ export default class FtbLogin extends FtbUtils
         if(response.SUCCESS)
         {
             this.showMessage(NOTIFICATION_SUCCESS_TITLE, response.ERROR_MESSAGE, NOTIFICATION_SUCCESS_VARIANT, NOTIFICATION_SUCCESS_MODE);
+            this.handleLogin(response.ERROR_DESCRIPTION);
         }
         else
         {
-            this.showMessage(NOTIFICATION_ERROR_TITLE, response.ERROR_DESCRIPTION, NOTIFICATION_ERROR_VARIANT);
+            this.showMessage(NOTIFICATION_ERROR_TITLE, response.ERROR_MESSAGE, NOTIFICATION_ERROR_VARIANT);
         }
         return;
 
@@ -127,8 +128,9 @@ export default class FtbLogin extends FtbUtils
 
     handleLogin = sessionId =>
     {
-        console.log('Work In Progress');
-        console.log('Navigation Mixin');
+        console.log('Starting Navigation');
+        let navigationObj = {type: "comm__namedPage", attributes:{name:"FTB_PreLogin__c"}, state:{payload:sessionId, pageName:'FTB_HomePage__c'}};
+        this.handleNavigation(JSON.stringify(navigationObj));
     }
 
 
