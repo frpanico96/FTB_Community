@@ -3,7 +3,7 @@
  * Utility class
  * for common operations
 */
-public virtual with sharing class FTB_UTL_Utils {
+public virtual with sharing class FTB_UTL_Utils{
 
     private static FTB_QR_Utils utilsQr = new FTB_QR_Utils();
 
@@ -126,6 +126,18 @@ public virtual with sharing class FTB_UTL_Utils {
     private Boolean booleanConverter(Object field)
     {
         return Boolean.valueOf(field);
+    }
+
+    @TestVisible
+    protected String generateSessionId(String credentials)
+    {
+        String initVector = 'FTB______INITVEC';
+        Blob exampleIv = Blob.valueOf(initVector);
+        Blob key = Crypto.generateAesKey(128);
+        Blob data = Blob.valueOf(credentials);
+        Blob encrypted = Crypto.encrypt('AES128', key, exampleIv, data);
+        String sessionId = JSON.serialize(encrypted);
+        return sessionId;
     }
 
 }

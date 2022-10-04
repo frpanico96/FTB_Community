@@ -11,16 +11,18 @@
                             value={username} 
                             name="username"
                             label="Username:"
-                            required="true">
+                            required="true"
+                            onchange={handleChange}>
                         </lightning-input>
                     </div>
                     <div class="slds-col slds-size_1-of-1">
                         <lightning-input
-                            type="text" 
+                            type="password" 
                             value={password} 
                             name="password"
                             label="Password:"
-                            required="true">
+                            required="true"
+                            onchange={handleChange}>
                         </lightning-input>
                     </div>
                     <div class="slds-var-p-around_small slds-col slds-size_1-of-2">

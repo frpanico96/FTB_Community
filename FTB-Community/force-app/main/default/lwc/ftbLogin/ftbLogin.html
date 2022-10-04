@@ -1,4 +1,7 @@
 <template>
+
+    <c-ftb-comet-d channel="/event/FTB_PEV_NotificationMessage__e" onsubscribemessage={handleSubscribeEvent}></c-ftb-comet-d>
+
     <div class="ftb-login-header slds-var-p-around_xx-small">
         <c-ftb-header 
             text-style={headerTextStyle} 
@@ -8,7 +11,12 @@
             style="color: aliceblue;">
         </c-ftb-header>
     </div>
-    <div class="ftb-login-form">
-        <c-ftb-form></c-ftb-form>
+    <div if:true={loadingSpinner}>
+        <lightning-spinner  class="ftb-loading-spinner" alternative-text="Loading..." size="medium"></lightning-spinner>
+    </div>
+    <div if:false={loadingSpinner} class="ftb-login-form">
+        <c-ftb-form
+            onsign={makeRegisterLogin}>
+        </c-ftb-form>
     </div>
 </template>
