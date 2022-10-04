@@ -9,6 +9,7 @@ public with sharing class FTB_WS_Integration
     /* Memeber variables */
     /* service represents the service to be called */
     private FTB_ENM_Service service;
+    private FTB_QR_Utils qrUtils = new FTB_QR_Utils();
 
     public FTB_WS_Integration(FTB_ENM_Service service)
     {
@@ -70,7 +71,7 @@ public with sharing class FTB_WS_Integration
     private Map<String,String> getIntegrationInfos(FTB_ENM_Service service)
     {
         Map<String,String> integrationMap = new Map<String,String>();
-        List<FTB_CMT_IntegrationConfiguration__mdt> integrationConfigurations = FTB_CMT_IntegrationConfiguration__mdt.getAll().values();
+        List<FTB_CMT_IntegrationConfiguration__mdt> integrationConfigurations = qrUtils.getIntegrationConfiguration(String.valueOf(service));
         for(FTB_CMT_IntegrationConfiguration__mdt integrationConfiguration : integrationConfigurations)
         {
             if(FTB_ENM_Service.valueOf(integrationConfiguration.FTB_EnumService__c) == service)
