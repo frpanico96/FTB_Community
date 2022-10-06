@@ -1,0 +1,15 @@
+.ftb-home-header
+{
+  box-shadow: 0px 0px 10px rgba(0,0,0.3);
+  overflow-wrap: break-word;
+}
+
+.ftb-home-li
+{
+  font-size: 20px;
+}
+
+.ftb-home-h1
+{
+  font-size: 20px;
+}
