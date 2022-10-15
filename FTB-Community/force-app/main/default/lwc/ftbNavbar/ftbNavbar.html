@@ -1,6 +1,22 @@
 <template>
-  <lightning-layout class="slds-var-p-left_medium">
-    <lightning-layout-item size="12"
+<div class="ftb-navbar-container slds-var-p-around_small">
+    <div class="slds-grid slds-gutters">
+        <div class="slds-col slds-size_5-of-6">
+            <lightning-layout horizontal-align="space">
+                <template for:each={navItems} for:item="navItem">
+                    <lightning-layout-item key={navItem.name}>
+                        <div class="ftb-nav-item custom-boxl">{navItem.label}</div>
+                    </lightning-layout-item>
+                </template>
+            </lightning-layout>
+        </div>
+        <div class="slds-col slds-size_1-of-6">
+            <h1 class="ftb-nav-h1 slds-align_absolute-center slds-var-m-right_small">Profile</h1>
+        </div>
+    </div>
+</div> 
+
+    <!-- <lightning-layout-item size="12"
         class="ftb-home-header 
             slds-grid slds-gutters 
             slds-var-p-around_small">
@@ -11,9 +27,7 @@
                 </template>
             </ul>
         </nav>
-        <div class="slds-col slds-size_1-of-3">
-            <h1 class="ftb-home-h1 slds-float_right">Profile</h1>
-        </div>
-    </lightning-layout-item>
-</lightning-layout>
+
+    </lightning-layout-item> -->
+
 </template>
