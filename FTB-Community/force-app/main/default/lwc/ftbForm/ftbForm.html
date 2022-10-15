@@ -1,6 +1,50 @@
 <template>
     <div class="ftb-form">
-        <div class="slds-grid slds-gutters">
+        <lightning-layout vertical-align="stretch" multiple-row="true">
+            <lightning-layout-item flexibility="auto" padding="around-small">
+                <lightning-card title="Join The Community" icon-name="standard:trailhead_alt">
+                    <div class="slds-var-p-around_large slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-1">
+                        <lightning-input
+                            type="text" 
+                            value={username} 
+                            name="username"
+                            label="Username:"
+                            required="true"
+                            onchange={handleChange}>
+                        </lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1">
+                        <lightning-input
+                            type="password" 
+                            value={password} 
+                            name="password"
+                            label="Password:"
+                            required="true"
+                            onchange={handleChange}>
+                        </lightning-input>
+                    </div>
+                    <div class="slds-var-p-around_small slds-col slds-size_1-of-2">
+                        <button 
+                            class="slds-button slds-button_brand slds-button_stretch"
+                            name="signIn"
+                            onclick={handleClick}>
+                                <label></label>Sign In
+                        </button>
+                    </div>
+                    <div class="slds-var-p-around_small slds-col slds-size_1-of-2">
+                        <button 
+                            class="slds-button slds-button_outline-brand slds-button_stretch"
+                            name="signUp"
+                            onclick={handleClick}>
+                                <label></label>Sign Up
+                        </button>
+                    </div>
+                    </div> 
+                </lightning-card>
+            </lightning-layout-item>
+        </lightning-layout> 
+        <!-- <div class="slds-grid slds-gutters">
             <div class="slds-col slds-size_1-of-3"></div>
             <div class="slds-col slds-size_1-of-3">
                 <lightning-card title="Join The Community" icon-name="standard:trailhead_alt">
@@ -45,6 +89,6 @@
                 </lightning-card>
             </div>
             <div class="slds-col slds-size_1-of-3"></div>
-        </div>
+        </div> -->
     </div>
 </template>
