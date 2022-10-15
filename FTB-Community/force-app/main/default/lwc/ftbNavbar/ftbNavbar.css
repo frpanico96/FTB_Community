@@ -1,15 +1,16 @@
-.ftb-home-header
+.ftb-navbar-container
 {
   box-shadow: 0px 0px 10px rgba(0,0,0.3);
-  overflow-wrap: break-word;
 }
 
-.ftb-home-li
+.ftb-nav-item
 {
-  font-size: 20px;
+  font-size: 18px;
+  color: rgb(84, 84, 84);
 }
 
-.ftb-home-h1
+.ftb-nav-h1
 {
-  font-size: 20px;
+  font-size: 18px;
+  color: rgb(84, 84, 84);
 }

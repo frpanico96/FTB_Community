@@ -1,8 +1,7 @@
 <template>
     <div class="ftb-form">
-        <div class="slds-grid slds-gutters">
-            <div class="slds-col slds-size_1-of-3"></div>
-            <div class="slds-col slds-size_1-of-3">
+        <lightning-layout vertical-align="stretch" multiple-row="true">
+            <lightning-layout-item flexibility="auto, no-grow" padding="around-small" class="slds-align_absolute-center">
                 <lightning-card title="Join The Community" icon-name="standard:trailhead_alt">
                     <div class="slds-var-p-around_large slds-grid slds-wrap">
                     <div class="slds-col slds-size_1-of-1">
@@ -43,8 +42,7 @@
                     </div>
                     </div> 
                 </lightning-card>
-            </div>
-            <div class="slds-col slds-size_1-of-3"></div>
-        </div>
+            </lightning-layout-item>
+        </lightning-layout>
     </div>
 </template>
