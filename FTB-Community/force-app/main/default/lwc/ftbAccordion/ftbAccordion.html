@@ -1,0 +1,11 @@
+<template>
+    <lightning-card>
+      <lightning-accordion>
+        <template for:each={accordionItems} for:item="item">
+          <lightning-accordion-section key={item.id} label={item.teamName}>
+            <c-ftb-data-table table-columns={item.header} table-data={item.dataObj}></c-ftb-data-table>
+          </lightning-accordion-section>
+        </template>
+      </lightning-accordion>
+    </lightning-card>
+</template>
