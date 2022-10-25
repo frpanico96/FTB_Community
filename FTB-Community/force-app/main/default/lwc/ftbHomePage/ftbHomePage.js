@@ -14,4 +14,6 @@ export default class FtbHomePage extends FtbUtils
     {name: 'standings', label: 'Standings'},
     {name: 'trades', label: 'Trades'},
   ]
+
+  @track homePage = true;
 }
