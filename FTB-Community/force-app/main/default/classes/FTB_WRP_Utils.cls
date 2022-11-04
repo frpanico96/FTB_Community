@@ -62,4 +62,42 @@ public with sharing class FTB_WRP_Utils
             this.message = '';
         }
     }
+
+    public class ColumnHeaderWrp
+    {
+        public String label;
+        public String fieldName;
+    }
+    public class HomePageHomeWrp
+    {
+        public List<ColumnHeaderWrp> teamColumns;
+        public List<ColumnHeaderWrp> championshipColumns;
+        public List<HomePageHomeTeam> teamsData;
+        public List<HomePageHomeChampionship> championshipData;
+    }
+    public class HomePageHomeTeam
+    {
+        public String id;
+        public String team;
+        public List<HomePageHomePlayer> children;
+    }
+    public class HomePageHomePlayer
+    {
+        public String position;
+        public String player;
+        public String score;
+    }
+    public class HomePageHomeChampionship
+    {
+        public String id;
+        public String championshipName;
+        public List<HomePageHomeChampionshipRank> championshipRank;
+    }
+    public class HomePageHomeChampionshipRank
+    {
+        public String rank;
+        public String team;
+        public String win;
+        public String loss;
+    }
 }
