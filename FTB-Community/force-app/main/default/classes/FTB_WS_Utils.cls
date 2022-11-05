@@ -5,6 +5,14 @@ public with sharing class FTB_WS_Utils
     public Integer timeout;
     public String body;
 
+    public FTB_WS_Utils(String endpoint, String method, Integer timeout, String body)
+    {
+        this.endpoint = endpoint;
+        this.method = method;
+        this.timeout = timeout;
+        this.body = body;
+    }
+
     public HttpResponse makeCallout()
     {
         Http http = new Http();
@@ -14,10 +22,10 @@ public with sharing class FTB_WS_Utils
         try
         {
             req.setEndpoint(this.endpoint);
-            req.setHeader('Content-Type', 'application/json');
+            //req.setHeader('Content-Type', 'application/json');
             req.setMethod(this.method);
             req.setBody(this.body);
-            req.setTimeout(this.timeout);
+            //req.setTimeout(this.timeout);
 
             result = http.send(req);
         }

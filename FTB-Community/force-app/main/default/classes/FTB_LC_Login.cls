@@ -17,34 +17,7 @@ public with sharing class FTB_LC_Login extends FTB_UTL_Utils
             throw new AuraHandledException(ERROR_MESSAGE);
         }
     }
-    @AuraEnabled
-    public static string handleCometdSubscription(){
-        try {
-            FTB_CMT_IntegrationConfiguration__mdt integrationConfigurations = CustomMetadataType__mdt.getInstance('FTB_CometDSubscription');
 
-            String CLIENT_ID = integrationConfigurations.FTB_ClassName__c;
-            String CLIENT_SEC = integrationConfigurations.FTB_Endpoint__c;
-            String USERNAME = integrationConfigurations.FTB_EnumService__c;
-            String KEYWORD = integrationConfigurations.FTB_Method__c;
-
-            /* Make API call to connect to salesforce */
-            Http http = new Http();
-            String body = 'grant_type=password' + '&' + 'client_id='+CLIENT_ID+'&'+'client_secret='+CLIENT_SEC+'&'+'username='+USERNAME+'&'+'password='+KEYWORD;
-            HttpRequest req = new HttpRequest();
-            req.setEndpoint('https://login.salesforce.com/services/oauth2/token');
-            req.setMethod('POST');
-            req.setBody(body);
-            HttpResponse res = http.send(req);
-
-            String bodyResponse = res.getBody();
-            TokenResponse response = (TokenResponse) JSON.deserialize(bodyResponse, TokenResponse.class);
-
-            return response.access_token;
-        } catch (Exception e) {
-            System.debug(LoggingLevel.DEBUG, e.getMessage() + ' At line ' + e.getLineNumber());
-            throw new AuraHandledException(ERROR_MESSAGE);
-        }
-    }
     private static String makeRegisterLoginOperations(String credentials)
     {
         Map<String, String> credentialsMap = (Map<String,String>) JSON.deserialize(credentials, Map<String,String>.class);

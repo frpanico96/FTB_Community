@@ -81,5 +81,4 @@ export default class FtbUtils extends NavigationMixin(LightningElement) {
         this[NavigationMixin.Navigate](navigationObj);
     }
 
-
 }
