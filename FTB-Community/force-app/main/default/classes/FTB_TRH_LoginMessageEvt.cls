@@ -52,7 +52,9 @@ public with sharing class FTB_TRH_LoginMessageEvt extends FTB_TRH_TriggerHandler
                 String sessionId;
                 if(userSessions.isEmpty())
                 {
-                    sessionId = (loginUtl.generateUserSession(existingUsers[0].Id, newUser.FTB_Username__c)).FTB_SessionId__c;
+                    newSession = loginUtl.generateUserSession(existingUsers[0].Id, newUser.FTB_Username__c);
+                    sessionId = newSession.FTB_SessionId__c;
+                    insertSObject(newSession);
                 }
                 else
                 {

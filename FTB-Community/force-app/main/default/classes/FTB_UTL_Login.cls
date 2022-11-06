@@ -10,7 +10,7 @@ public with sharing class FTB_UTL_Login extends FTB_UTL_Utils
         }
         newSession.FTB_User__c = userId;
         newSession.FTB_SessionId__c = generateSessionId(username);
-
+        
         return newSession;
     }
 }
