@@ -16,15 +16,18 @@ export default class FtbHomePageBody extends FtbUtils
   @track teamColumns = [];
   @track teamData = [];
 
+  @track wiredConnected = false;
+
   @wire(CurrentPageReference)
   currentPageParameters(currentPageReference)
   {
     if(currentPageReference)
     {
       console.log(currentPageReference);
-      if(!currentPageReference.state) return;
+      if(!currentPageReference.state || this.wiredConnected) return;
+      this.wiredConnected = true;
       setTimeout(() => {
-        this.handleDataFetch(currentPageReference.state['payload'])
+        this.handleDataFetch(currentPageReference.state['payload']);
       }, 3000);
     }
   }
@@ -86,9 +89,13 @@ export default class FtbHomePageBody extends FtbUtils
       for(let singleTeam of teamObj)
       {
         Object.defineProperty(singleTeam, '_children', Object.getOwnPropertyDescriptor(singleTeam, 'children'));
+        delete singleTeam['children'];
       }
       console.log('@@@ After Renaming >>> ' + JSON.stringify(teamObj));
-      this.championshipTable = payload.championshipData[0];
+      this.teamData = teamObj;
+      console.log(JSON.stringify(payload.championshipData[0]));
+      console.log(JSON.stringify(payload.championshipData[0]['championshipRank']));
+      this.championshipData = payload.championshipData[0]['championshipRank'];
     }
   }
 
