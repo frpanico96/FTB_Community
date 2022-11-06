@@ -10,10 +10,10 @@ public with sharing class FTB_UTL_HomePageHome
 
     private static List<Map<String,String>> championshipConfigMap = new List<Map<String,String>>
     {
-      new Map<String,String>{'label' => 'Rank', 'fieldName' => 'FTB_Ranking__c'},
-      new Map<String,String>{'label' => 'Team', 'fieldName' => 'Name'},
-      new Map<String,String>{'label' => 'Win', 'fieldName' => 'FTB_Win__c'},
-      new Map<String,String>{'label' => 'Loss', 'fieldName' => 'FTB_Loss__c'}
+      new Map<String,String>{'label' => 'Rank', 'fieldName' => 'rank'},
+      new Map<String,String>{'label' => 'Team', 'fieldName' => 'team'},
+      new Map<String,String>{'label' => 'Win', 'fieldName' => 'win'},
+      new Map<String,String>{'label' => 'Loss', 'fieldName' => 'loss'}
     };
 
     public static String fetchData(String sessionId)

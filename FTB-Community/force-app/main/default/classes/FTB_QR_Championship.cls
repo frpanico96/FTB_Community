@@ -7,7 +7,7 @@ public with sharing class FTB_QR_Championship
         (
             [SELECT Id, 
             Name, 
-            (SELECT Name, FTB_Win__c, FTB_Loss__c, FTB_Ranking__c FROM FTB_Teams__r) 
+            (SELECT Name, FTB_Win__c, FTB_Loss__c, FTB_Ranking__c FROM FTB_Teams__r ORDER BY FTB_Ranking__c ASC) 
             FROM FTB_Championship__c 
             WHERE Id IN :championshipIds]
         );
