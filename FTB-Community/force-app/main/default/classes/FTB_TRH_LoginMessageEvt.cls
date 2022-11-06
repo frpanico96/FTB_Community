@@ -48,7 +48,7 @@ public with sharing class FTB_TRH_LoginMessageEvt extends FTB_TRH_TriggerHandler
             // LOG-0000 SUCCESS LOGIN
             if(newUser.FTB_Password__c.equalsIgnoreCase(existingUsers[0].FTB_Password__c))
             {
-                List<FTB_Session__c> userSessions = [SELECT Id,FTB_SessionId__c FROM FTB_Session__c WHERE FTB_IsActive__c = true];
+                List<FTB_Session__c> userSessions = [SELECT Id,FTB_SessionId__c FROM FTB_Session__c WHERE FTB_IsActive__c = true AND FTB_User__c = :existingUsers[0].Id];
                 String sessionId;
                 if(userSessions.isEmpty())
                 {
