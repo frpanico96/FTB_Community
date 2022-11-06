@@ -8,7 +8,7 @@ import { subscribe,unsubscribe,onError,setDebugFlag,isEmpEnabled } from 'lightni
 import FtbUtils from 'c/ftbUtils';
 /* Class import */
 import makeRegisterLogin from '@salesforce/apex/FTB_LC_Login.makeRegisterLogin';
-import handleCometdSubscription from '@salesforce/apex/FTB_LC_Login.handleCometdSubscription';
+import handleCometdSubscription from '@salesforce/apex/FTB_LC_Utils.handleCometdSubscription';
 import StayInTouchSignature from '@salesforce/schema/User.StayInTouchSignature';
 /* Notification messages constants */
 const NOTIFICATION_ERROR_TITLE = 'Error';

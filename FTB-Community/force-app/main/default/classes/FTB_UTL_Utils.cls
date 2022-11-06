@@ -140,4 +140,16 @@ public virtual with sharing class FTB_UTL_Utils{
         return sessionId;
     }
 
+    @TestVisible
+    protected String serializeMessage(String code, String description, String identificationKey)
+    {
+        return JSON.serialize(new FTB_WRP_OperationResult(code, description, identificationKey));
+    }
+
+    @TestVisible
+    protected void dequeue(FTB_Queue__c queue)
+    {
+        deleteSObject(queue);
+    }
+
 }

@@ -60,5 +60,33 @@ public with sharing class FTB_LC_Utils extends FTB_UTL_Utils
         AND FTB_Active__c = true];
     }
 
+    @AuraEnabled
+    public static string handleCometdSubscription()
+    {
+        try
+        {
+            FTB_CMT_IntegrationConfiguration__mdt integrationConfigurations = FTB_CMT_IntegrationConfiguration__mdt.getInstance('FTB_CometDSubscription');
+
+            String CLIENT_ID = integrationConfigurations.FTB_ClassName__c;
+            String CLIENT_SEC = integrationConfigurations.FTB_Endpoint__c;
+            String USERNAME = integrationConfigurations.FTB_EnumService__c;
+            String KEYWORD = integrationConfigurations.FTB_Method__c;
+
+            /* Make API call to connect to salesforce */
+            Http http = new Http();
+            String body = 'grant_type=password' + '&' + 'client_id='+CLIENT_ID+'&'+'client_secret='+CLIENT_SEC+'&'+'username='+USERNAME+'&'+'password='+KEYWORD;
+
+            FTB_WS_Utils calloutUtils = new FTB_WS_Utils('https://login.salesforce.com/services/oauth2/token','POST',12000,body);
+            HttpResponse response = calloutUtils.makeCallout();
+            FTB_WRP_Utils.TokenResponse responseBody = (FTB_WRP_Utils.TokenResponse) JSON.deserialize(response.getBody(), FTB_WRP_Utils.TokenResponse.class);
+
+            return responseBody.access_token;
+        }
+        catch(Exception e)
+        {
+            throw new AuraHandledException('Unable to communicate with cloud. Please contact your administrator.');
+        }
+    }
+
 
 }

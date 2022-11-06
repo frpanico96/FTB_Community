@@ -10,9 +10,10 @@ public with sharing class FTB_TRH_Queue extends FTB_TRH_TriggerHandler
         if(!queues.isEmpty()) return;
         Map<String, String> messageMap = (Map<String, String>) JSON.deserialize(currentQueue.FTB_Payload__c, Map<String,String>.class);
         messageMap.put('queueId', currentQueue.Id);
-        FTB_LoginMessage__e loginEvent = new FTB_LoginMessage__e(FTB_Payload__c = JSON.serialize(messageMap));
-        Eventbus.publish(loginEvent);
-
-        
+        FTB_CMT_IntegrationConfiguration__mdt getConfiguration = FTB_CMT_IntegrationConfiguration__mdt.getInstance(currentQueue.FTB_Operation__c);
+        if(getConfiguration == null) return;
+        SObject platEvent = (SObject) Type.forName(getConfiguration.FTB_ClassName__c).newInstance();
+        platEvent.put('FTB_Payload__c', JSON.serialize(messageMap));
+        Eventbus.publish(platEvent);    
     }
 }
