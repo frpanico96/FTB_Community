@@ -3,6 +3,11 @@
   <c-ftb-comet-d channel="/event/FTB_PEV_NotificationMessage__e" onsubscribemessage={handleSubscribeEvent}></c-ftb-comet-d>
   <!--Body of the home. It changes based on the button pressed on the home nav bar-->
   <section if:true={homePage}>
-    <c-ftb-home-page-home></c-ftb-home-page-home>
+    <c-ftb-home-page-home
+      championship-column={championshipColumn}
+      championship-data={championshipData}
+      team-columns={teamColumns}
+      team-data={teamData}
+    ></c-ftb-home-page-home>
   </section>
 </template>
