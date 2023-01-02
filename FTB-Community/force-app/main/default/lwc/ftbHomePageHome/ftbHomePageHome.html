@@ -1,6 +1,9 @@
 <!-- sldsValidatorIgnore -->
 <template>
-  <div class="ftb-home-body">
+  <div if:true={loadingSpinner}>
+    <lightning-spinner size="medium"></lightning-spinner>
+  </div>
+  <div if:false={loadingSpinner} class="ftb-home-body">
     <lightning-layout vertical-align="center" multiple-rows="true" horizontal-align="spread">
         <lightning-layout-item flexibility="auto" padding="around-small">
           <lightning-tree-grid data={teamData} columns={teamColumns} key-field="id" hide-checkbox-column="true"></lightning-tree-grid>
