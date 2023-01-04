@@ -7,10 +7,11 @@ import FtbUtils from 'c/ftbUtils';
 export default class FtbHomePageHome extends FtbUtils
 {
 
-  @api championshipColumn = [];
-  @api championshipData = [];
-  @api teamColumns = [];
-  @api teamData = [];
+  @track championshipColumn = [];
+  @track championshipData = [];
+  @track teamColumns = [];
+  @track teamData = [];
+  @track nextMatchPaylaod = []; 
 
   @track loadingSpinner = true;
 
@@ -43,7 +44,7 @@ export default class FtbHomePageHome extends FtbUtils
       let payload = JSON.parse(response.ERROR_DESCRIPTION);
       this.championshipColumn = payload.championshipColumns;
       this.teamColumns = payload.teamColumns;
-
+     
       const teamObj = payload.teamsData;
       for(let singleTeam of teamObj)
       {
@@ -53,7 +54,9 @@ export default class FtbHomePageHome extends FtbUtils
       this.teamData = teamObj;
       console.log(JSON.stringify(payload.championshipData[0]));
       console.log(JSON.stringify(payload.championshipData[0]['championshipRank']));
+      console.log(JSON.stringify(payload.nextMatchPaylaod[0]))
       this.championshipData = payload.championshipData[0]['championshipRank'];
+      this.nextMatchPaylaod = payload.nextMatchPaylaod[0];
     }
     this.loadingSpinner = false;
   }
