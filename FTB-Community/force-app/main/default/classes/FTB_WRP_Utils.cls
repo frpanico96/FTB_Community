@@ -82,6 +82,7 @@ public with sharing class FTB_WRP_Utils
         public List<ColumnHeaderWrp> championshipColumns;
         public List<HomePageHomeTeam> teamsData;
         public List<HomePageHomeChampionship> championshipData;
+        public List<HomePageHomeCalendar> nextMatchPaylaod;
     }
     public class HomePageHomeTeam
     {
@@ -107,5 +108,18 @@ public with sharing class FTB_WRP_Utils
         public String team;
         public String win;
         public String loss;
+    }
+    public class HomePageHomeCalendar
+    {
+        public String championshipId;
+        public String homeAway;
+        public String nextOpponent;
+    }
+    public class CalendarObj
+    {
+        public String homeId;
+        public String awayId;
+        public String home;
+        public String away;
     }
 }

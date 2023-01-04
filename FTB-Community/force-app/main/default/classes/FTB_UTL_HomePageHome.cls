@@ -37,6 +37,7 @@ public with sharing class FTB_UTL_HomePageHome
         result.championshipColumns = createHeader(championshipConfigMap);
         result.teamsData = createTeamData(userTeam);
         result.championshipData = createChampionshipData(championshipList);
+        result.nextMatchPaylaod = createCalendarData(championshipList, userTeam);
   
         return JSON.serialize(result);
     }
@@ -100,5 +101,25 @@ public with sharing class FTB_UTL_HomePageHome
         }
 
         return result;
+    }
+    private static List<FTB_WRP_Utils.HomePageHomeCalendar> createCalendarData(List<FTB_Championship__c> championshipList, List<FTB_Team__c> teamList)
+    {
+      List<FTB_WRP_Utils.HomePageHomeCalendar> result = new List<FTB_WRP_Utils.HomePageHomeCalendar>();
+      for(FTB_Championship__c championship : championshipList)
+      {
+        for(FTB_Calendar__c calendar : championship?.FTB_Calendars__r)
+        {
+          for(FTB_Team__c singleTeam : teamList)
+          {
+            FTB_WRP_Utils.HomePageHomeCalendar nextOpponent= FTB_UTL_Calendar.getNextOpponent(calendar, singleTeam);
+            if(nextOpponent != null)
+            {
+              result.add(FTB_UTL_Calendar.getNextOpponent(calendar, singleTeam));
+            }
+          }
+        }
+      }
+
+      return result;
     }
 }
