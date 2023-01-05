@@ -82,7 +82,7 @@ public with sharing class FTB_WRP_Utils
         public List<ColumnHeaderWrp> championshipColumns;
         public List<HomePageHomeTeam> teamsData;
         public List<HomePageHomeChampionship> championshipData;
-        public List<HomePageHomeCalendar> nextMatchPaylaod;
+        public List<HomePageHomeCalendar> nextMatchPayload;
     }
     public class HomePageHomeTeam
     {

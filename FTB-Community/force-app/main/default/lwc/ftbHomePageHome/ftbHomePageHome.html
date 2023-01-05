@@ -1,11 +1,11 @@
 <!-- sldsValidatorIgnore -->
 <template>
   <div if:true={loadingSpinner}>
-    <lightning-spinner size="medium"></lightning-spinner>
+    <lightning-spinner size="medium" alternative-text="loading..."></lightning-spinner>
   </div>
   <div if:false={loadingSpinner} class="ftb-home-body">
     <div if:true={showError}>
-        
+      <c-ftb-alert-banner utility-icon="offline"></c-ftb-alert-banner>
     </div>
     <div if:false={showError}>
       <lightning-layout vertical-align="center" multiple-rows="true" horizontal-align="spread">

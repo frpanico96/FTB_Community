@@ -8,10 +8,13 @@ export default class FtbHomePageHome extends FtbUtils
 {
 
   @track championshipColumn = [];
+  @track champioshipObj = [];
   @track championshipData = [];
+  @track championshipName = '';
   @track teamColumns = [];
   @track teamData = [];
-  @track nextMatchPaylaod = []; 
+  @track nextMatchObj = [];
+  @track nextMatchPayload = {}; 
 
   @track loadingSpinner = true;
   @track errorMessage;
@@ -55,9 +58,13 @@ export default class FtbHomePageHome extends FtbUtils
       this.teamData = teamObj;
       console.log(JSON.stringify(payload.championshipData[0]));
       console.log(JSON.stringify(payload.championshipData[0]['championshipRank']));
-      console.log(JSON.stringify(payload.nextMatchPaylaod[0]))
+      console.log(JSON.stringify(payload.championshipData[0]['championshipName']));
+      console.log(JSON.stringify(payload.nextMatchPayload[0]));
+      this.champioshipObj = payload.championshipData;
       this.championshipData = payload.championshipData[0]['championshipRank'];
-      this.nextMatchPaylaod = payload.nextMatchPaylaod[0];
+      this.championshipName = payload.championshipData[0]['championshipName'];
+      this.nextMatchObj = payload.nextMatchPayload;
+      this.nextMatchPayload = payload.nextMatchPayload[0];
     }
     else
     {
