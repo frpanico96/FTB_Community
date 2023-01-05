@@ -11,7 +11,9 @@ public with sharing class FTB_TRH_HomeMessageEvt extends FTB_TRH_TriggerHandler
         String result = FTB_UTL_HomePageHome.fetchData(sessionId);
 
         FTB_PEV_NotificationMessage__e notification = new FTB_PEV_NotificationMessage__e();
-        notification.FTB_SerializedMessage__c = serializeMessage('HOM-0000', result, sessionId);
+        String errorCode = String.isNotBlank(result) ? 'HOM-0000' : 'HOM-0001';
+        String errorDescr = String.isNotBlank(result) ? result : 'Unable to fetch data. Try again or contact your administrator';
+        notification.FTB_SerializedMessage__c = serializeMessage(errorCode, errorDescr, sessionId);
 
         Eventbus.publish(notification);
 

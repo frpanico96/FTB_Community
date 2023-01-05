@@ -18,7 +18,15 @@ public with sharing class FTB_UTL_HomePageHome
 
     public static String fetchData(String sessionId)
     {
+      try
+      {
         return getHomeData(sessionId);
+      }
+      catch(Exception e)
+      {
+        new FTB_UTL_ErrorLog(String.valueOf(FTB_ENM_Service.FETCH_HOME), 'HOME-0001', e.getMessage() + ' At line: ' + e.getLineNumber());
+        return '';
+      }
     }
 
     private static String getHomeData(String sessionId)
