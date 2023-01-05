@@ -2,18 +2,17 @@ import { LightningElement, api, track } from 'lwc';
 /* Import Utils Component */
 import FtbUtils from 'c/ftbUtils';
 
-DEFAULT_SPAN_CLASS = 'slds-icon_container slds-icon-utility-warning slds-var-m-right_x-small';
-DEFAULT_ASSET_LOCATION = '/assets/icons/utility-sprite/svg/symbols.svg#warning';
+const DEFAULT_SPAN_CLASS = 'slds-icon_container slds-icon-utility-warning slds-var-m-right_x-small';
+const DEFAULT_ASSET_LOCATION = '/assets/icons/utility-sprite/svg/symbols.svg#warning';
 
 export default class FtbAlertBanner extends FtbUtils
 {
 
-  @api utilityIcon;
+  @api utilityIcon= 'warning';
   @api errorDescription= 'Generic error try contacting your Administrator.';
 
-  @track iconSpanClass;
-  @track iconAssetLocation;
-  
+  @track iconSpanClass = DEFAULT_SPAN_CLASS;
+  @track iconAssetLocation = DEFAULT_ASSET_LOCATION;
   
   get iconSpanClass()
   {

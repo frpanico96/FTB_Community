@@ -8,7 +8,8 @@ public with sharing class FTB_QR_Championship
             [SELECT Id, 
             Name, 
             (SELECT Name, FTB_Win__c, FTB_Loss__c, FTB_Ranking__c FROM FTB_Teams__r ORDER BY FTB_Ranking__c ASC),
-            (SELECT FTB_Pairings__c, FTB_RealPairings__c, FTB_NumberOfGames__c FROM FTB_Calendars__r WHERE FTB_StartDate__c >= TODAY AND FTB_EndDate__c < TODAY) 
+            (SELECT FTB_Championship__c,FTB_Pairings__c, FTB_RealPairings__c, FTB_NumberOfGames__c FROM FTB_Calendars__r 
+                WHERE FTB_StartDate__c <= TODAY AND FTB_EndDate__c > TODAY) 
             FROM FTB_Championship__c 
             WHERE Id IN :championshipIds]
         );

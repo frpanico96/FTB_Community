@@ -45,7 +45,7 @@ public with sharing class FTB_UTL_HomePageHome
         result.championshipColumns = createHeader(championshipConfigMap);
         result.teamsData = createTeamData(userTeam);
         result.championshipData = createChampionshipData(championshipList);
-        result.nextMatchPaylaod = createCalendarData(championshipList, userTeam);
+        result.nextMatchPayload = createCalendarData(championshipList, userTeam);
   
         return JSON.serialize(result);
     }
