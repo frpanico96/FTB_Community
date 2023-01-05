@@ -14,6 +14,7 @@ export default class FtbHomePageHome extends FtbUtils
   @track nextMatchPaylaod = []; 
 
   @track loadingSpinner = true;
+  @track errorMessage;
 
   @api
   homeInitialization(sessionId)
@@ -57,6 +58,10 @@ export default class FtbHomePageHome extends FtbUtils
       console.log(JSON.stringify(payload.nextMatchPaylaod[0]))
       this.championshipData = payload.championshipData[0]['championshipRank'];
       this.nextMatchPaylaod = payload.nextMatchPaylaod[0];
+    }
+    else
+    {
+      this.showError = response.ERROR_DESCRIPTION;
     }
     this.loadingSpinner = false;
   }
