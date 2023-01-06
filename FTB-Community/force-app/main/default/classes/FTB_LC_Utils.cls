@@ -1,7 +1,5 @@
 /**@frpanico 2022-02-06
- * FTB
- * Controller for
- * LWC ftbUtils
+ * Controller for LWC ftbUtils
  */
 public with sharing class FTB_LC_Utils extends FTB_UTL_Utils
 {
@@ -59,7 +57,10 @@ public with sharing class FTB_LC_Utils extends FTB_UTL_Utils
         WHERE FTB_Component__c = :componentName
         AND FTB_Active__c = true];
     }
-
+    /**@frpanico
+     * This method allows CometD to subscribe to a certain platform event
+     * It makes a callout to SFDC requesting the access_token logging via a Platform Integration User
+     */
     @AuraEnabled
     public static string handleCometdSubscription()
     {

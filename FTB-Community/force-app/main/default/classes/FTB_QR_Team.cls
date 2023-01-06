@@ -1,3 +1,7 @@
+/*@frpanico 
+ * Query class for the Team Custom Object
+ * This class holds all the useful query for the object
+ */
 public with sharing class FTB_QR_Team 
 {
     public static List<FTB_Team__c> getTeamWithPlayersByUserSession(String sessionId)

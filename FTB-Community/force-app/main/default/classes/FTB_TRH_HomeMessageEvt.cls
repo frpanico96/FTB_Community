@@ -1,5 +1,12 @@
+/**@frpanico
+ * Trigger Handler for the Home Message platform event
+ */
 public with sharing class FTB_TRH_HomeMessageEvt extends FTB_TRH_TriggerHandler 
 {
+    /**@frpanico
+     * This method fetches data and a message with the result of the operation
+     * Is sent back to the Community via a platform event
+     */
     public override void afterInsert()
     {
         FTB_HomeMessage__e event = (FTB_HomeMessage__e) Trigger.new[0];

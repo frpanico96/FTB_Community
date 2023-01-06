@@ -1,7 +1,5 @@
 /**@frpanico 2022-05-25
- * FTB
- * FTB_QR_Utils
- * Test class
+ * Test class for FTB_QR_Utils
  */
 @isTest
 public with sharing class FTB_QR_UtilsTest 

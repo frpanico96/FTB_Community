@@ -1,3 +1,6 @@
+/**@frpanico
+ * Test class for FTB_BA_MassiveOperation
+ */
 @isTest
 public with sharing class FTB_BA_MassiveOperationTest 
 {

@@ -1,7 +1,5 @@
 /**@frpanico 2022-05-26
- * FTB
- * FTB_LC_StartPage
- * Test class
+ * Test class FTB_LC_StartPage
  */
 @isTest
 public with sharing class FTB_LC_StartPageTest 

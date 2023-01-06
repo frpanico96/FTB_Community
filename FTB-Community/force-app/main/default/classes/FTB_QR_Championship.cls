@@ -1,3 +1,7 @@
+/**@frpanico
+ * Query class for the Championship Custom Object
+ * This class holds all the useful query for the object
+ */
 public with sharing class FTB_QR_Championship
 {
 

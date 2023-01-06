@@ -1,7 +1,6 @@
 /*@frpanico 2022-02-15
- *FTB
- *Query Class
- *For Player Object
+ * Query class for the Player Custom Object
+ * This class holds all the useful query for the object
  */
 public with sharing class FTB_QR_Players {
 
