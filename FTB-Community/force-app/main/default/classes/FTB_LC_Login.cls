@@ -7,7 +7,9 @@ public with sharing class FTB_LC_Login extends FTB_UTL_Utils
     private static FTB_UTL_Utils ftbUtils = new FTB_UTL_Utils();
     private static final String ERROR_MESSAGE = 'Unable to Login. Please contact the administrator.';
 
-    /* Api method called from client */
+    /**@frpanico
+     * Api method called from client 
+     */
     @AuraEnabled
     public static string makeRegisterLogin(String credentials){
         try {
@@ -17,7 +19,10 @@ public with sharing class FTB_LC_Login extends FTB_UTL_Utils
             throw new AuraHandledException(ERROR_MESSAGE);
         }
     }
-
+    /**@frpanico
+     * This method creates the queue which is then elaborated from the Salesforce Platform
+     * To verify the login
+     */
     private static String makeRegisterLoginOperations(String credentials)
     {
         Map<String, String> credentialsMap = (Map<String,String>) JSON.deserialize(credentials, Map<String,String>.class);
@@ -29,15 +34,5 @@ public with sharing class FTB_LC_Login extends FTB_UTL_Utils
         ftbUtils.insertSObject(que);
 
         return que.Id;
-    }
-
-    class TokenResponse 
-    {
-        String access_token;
-        String instance_url;
-        String id;
-        String token_type;
-        String issued_at;
-        String signature;
     }
 }

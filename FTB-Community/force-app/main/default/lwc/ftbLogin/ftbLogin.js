@@ -3,13 +3,11 @@
  * Start Page Component
  */
 import { LightningElement, api, track } from 'lwc';
-import { subscribe,unsubscribe,onError,setDebugFlag,isEmpEnabled } from 'lightning/empApi';
 /* Import Utils Component */
 import FtbUtils from 'c/ftbUtils';
 /* Class import */
 import makeRegisterLogin from '@salesforce/apex/FTB_LC_Login.makeRegisterLogin';
 import handleCometdSubscription from '@salesforce/apex/FTB_LC_Utils.handleCometdSubscription';
-import StayInTouchSignature from '@salesforce/schema/User.StayInTouchSignature';
 /* Notification messages constants */
 const NOTIFICATION_ERROR_TITLE = 'Error';
 const NOTIFICATION_ERROR_VARIANT = 'error';

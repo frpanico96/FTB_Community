@@ -1,5 +1,13 @@
+/**@frpanico
+ * This is the controller class for the Home Page of the community
+ * component ftbHomePageHome
+ */
 public with sharing class FTB_LC_HomePageHome extends FTB_UTL_Utils
 {
+    /**@frapnico
+     * This is the method exposed to retrieve data from the database
+     * A queue is inserted which is then elaborated by the Salesforce Platform
+     */
     @AuraEnabled
     public static String fetchData(String sessionId)
     {

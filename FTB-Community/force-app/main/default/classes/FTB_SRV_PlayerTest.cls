@@ -1,7 +1,5 @@
 /**@frpanico 2022-05-25
- * FTB
- * FTB_SRV_Player
- * Test class
+ * Test class for FTB_SRV_Player
  */
 @isTest
 public with sharing class FTB_SRV_PlayerTest 

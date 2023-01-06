@@ -1,7 +1,5 @@
 /**@frpanico 2022-05-26
- * FTB
- * FTB_LC_Utils
- * Test class
+ * Test class for FTB_LC_Utils
  */
 @isTest
 public with sharing class FTB_LC_UtilsTest 
