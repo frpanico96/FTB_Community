@@ -72,6 +72,7 @@ public with sharing class FTB_UTL_HomePageHome
           List<FTB_WRP_Utils.HomePageHomePlayer> playersData = new List<FTB_WRP_Utils.HomePageHomePlayer>();
           singleData.id = team.Id;
           singleData.team = team.Name;
+          singleData.championshipId = team.FTB_Championship__c;
           for(FTB_Player__c player : team.FTB_Players__r)
           {
             FTB_WRP_Utils.HomePageHomePlayer singlePlayerData = new FTB_WRP_Utils.HomePageHomePlayer();
