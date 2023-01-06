@@ -4,15 +4,19 @@ import fetchData from '@salesforce/apex/FTB_LC_HomePageHome.fetchData';
 /* Import Utils Component */
 import FtbUtils from 'c/ftbUtils';
 
+const CHAMPIONSHIP_RANK = 'championshipRank';
+const CHAMPIONSHIP_NAME = 'championshipName';
+
 export default class FtbHomePageHome extends FtbUtils
 {
 
   @track championshipColumn = [];
-  @track champioshipObj = [];
+  @track championshipObj = [];
   @track championshipData = [];
   @track championshipName = '';
   @track teamColumns = [];
   @track teamData = [];
+  @track selectedTeam = [];
   @track nextMatchObj = [];
   @track nextMatchPayload = {}; 
 
@@ -60,15 +64,38 @@ export default class FtbHomePageHome extends FtbUtils
       console.log(JSON.stringify(payload.championshipData[0]['championshipRank']));
       console.log(JSON.stringify(payload.championshipData[0]['championshipName']));
       console.log(JSON.stringify(payload.nextMatchPayload[0]));
-      this.champioshipObj = payload.championshipData;
-      this.championshipData = payload.championshipData[0]['championshipRank'];
-      this.championshipName = payload.championshipData[0]['championshipName'];
+      this.championshipObj = payload.championshipData;
+      this.setChampionshipInfo(payload.championshipData[0]);
+      this.selectedTeam = [...this.selectedTeam, this.teamData[0]['id']];
       this.nextMatchObj = payload.nextMatchPayload;
       this.nextMatchPayload = payload.nextMatchPayload[0];
     }
     else
     {
       this.showError = response.ERROR_DESCRIPTION;
+    }
+    this.loadingSpinner = false;
+  }
+  setChampionshipInfo(championship)
+  {
+    this.championshipData = championship[CHAMPIONSHIP_RANK];
+    this.championshipName = championship[CHAMPIONSHIP_NAME];
+  }
+  handleToggleEvent(event)
+  {
+    // console.log('Toggle Event --> ' + JSON.stringify(event.detail));
+    // console.log('Toggle Event --> ' + JSON.stringify(event.detail.isExpanded));
+    // console.log('Toggle Event --> ' + JSON.stringify(event.detail.row));
+    // console.log('Toggle Event --> ' + JSON.stringify(event.detail.name));
+    const eventDetail = event.detail;
+    this.loadingSpinner = true;
+    if(eventDetail.isExpanded)
+    {
+      this.selectedTeam = [eventDetail.name];
+      let championshipId = eventDetail.row['championshipId'];
+      const championship = this.championshipObj.find(el => el.id === championshipId);
+      this.setChampionshipInfo(championship);
+      this.nextMatchPayload = this.nextMatchObj.find(el => el.championshipId === championshipId);
     }
     this.loadingSpinner = false;
   }

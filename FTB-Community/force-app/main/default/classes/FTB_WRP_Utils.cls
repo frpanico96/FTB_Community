@@ -88,6 +88,7 @@ public with sharing class FTB_WRP_Utils
     {
         public String id;
         public String team;
+        public String championshipId;
         public List<HomePageHomePlayer> children;
     }
     public class HomePageHomePlayer

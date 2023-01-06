@@ -10,7 +10,7 @@
     <div if:false={showError}>
       <lightning-layout vertical-align="center" multiple-rows="true" horizontal-align="spread">
           <lightning-layout-item flexibility="auto" padding="around-small">
-            <lightning-tree-grid data={teamData} columns={teamColumns} key-field="id" hide-checkbox-column="true"></lightning-tree-grid>
+            <lightning-tree-grid data={teamData} columns={teamColumns} expanded-rows={selectedTeam} key-field="id" hide-checkbox-column="true" ontoggle={handleToggleEvent}></lightning-tree-grid>
           </lightning-layout-item>
           <lightning-layout-item class="slds-align_absolute-center" flexibility="auto" padding="around-small">
               <c-ftb-home-page-home-next-match next-match-payload={nextMatchPayload}></c-ftb-home-page-home-next-match>
