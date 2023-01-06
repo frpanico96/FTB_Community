@@ -38,3 +38,6 @@ $RECYCLE.BIN/
 
 # Local environment variables
 .env
+
+#IntegrationConfiguration
+force-app/main/default/customMetadata/FTB_CMT_IntegrationConfiguration.FTB_CometDSubscription.md-meta.xml
