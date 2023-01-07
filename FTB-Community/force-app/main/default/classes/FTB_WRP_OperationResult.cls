@@ -6,6 +6,7 @@
  * ERROR_DESCRIPTION
  * SUCCESS
  * ERROR_MESSAGE
+ * INDENTIFICATION_KEY
  * A method isSuccess()
  * which returns a boolean indicating success (true)
  * or failure (false)

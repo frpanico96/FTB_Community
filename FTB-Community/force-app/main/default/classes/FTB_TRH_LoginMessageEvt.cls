@@ -1,3 +1,6 @@
+/**@frpanico
+ * This class handles the login verification
+ */
 public with sharing class FTB_TRH_LoginMessageEvt extends FTB_TRH_TriggerHandler
 {
     private static final String ERROR_MESSAGE = 'Unable to Login. Please contact the administrator.';
@@ -8,7 +11,12 @@ public with sharing class FTB_TRH_LoginMessageEvt extends FTB_TRH_TriggerHandler
     private static final String ERROR_REGISTRATION_MESSAGE = 'User already registered';
     private static FTB_UTL_Login loginUtl = new FTB_UTL_Login();
     private static FTB_UTL_Security securityUtl = new FTB_UTL_Security();
-    
+    /**@frpanico
+     * This method check for existing user and cover the following cases
+     * Sign Up with existing user
+     * Sign In without existing user
+     * Sign In with incorrect password
+     */
     public override void afterInsert()
     {
         FTB_LoginMessage__e event = (FTB_LoginMessage__e) Trigger.new[0];
