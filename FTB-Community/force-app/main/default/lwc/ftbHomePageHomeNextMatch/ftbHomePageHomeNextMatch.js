@@ -1,3 +1,9 @@
+/**@frpanico
+ * Child component that shows the nextOpponent
+ * It is composed of two boxes with an offset in height and lenght
+ * @/VS
+ *     NextOpponent
+ */
 import { LightningElement, api, track } from 'lwc';
 
 export default class FtbHomePageHomeNextMatch extends LightningElement 

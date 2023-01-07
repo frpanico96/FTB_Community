@@ -1,3 +1,8 @@
+/**@frpanico
+ * This is a generic component that shows a banner
+ * The banner can be customized to be warning, error, info, ecc.
+ * #### The icon is not working at the moment in communities ####
+ */
 import { LightningElement, api, track } from 'lwc';
 /* Import Utils Component */
 import FtbUtils from 'c/ftbUtils';

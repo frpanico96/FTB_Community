@@ -1,3 +1,7 @@
+/**@frpanico
+ * Generic accordion component
+ * #### This component is not used at the time #### 
+ */
 import { LightningElement, track, api } from 'lwc';
 
 export default class FtbAccordion extends LightningElement 
