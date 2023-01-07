@@ -68,6 +68,9 @@ public virtual with sharing class FTB_UTL_Utils{
     {
         return readSObject(new List<SObject>{sobj});
     }
+    /**@frpanico
+     * This is the Apex version of tryParse
+     */
     @TestVisible
     protected Object tryParse(Object field, Schema.SoapType soapType)
     {
@@ -127,7 +130,11 @@ public virtual with sharing class FTB_UTL_Utils{
     {
         return Boolean.valueOf(field);
     }
-
+    /**@frpanico
+     * This method generates the sessionId
+     * given an input string
+     * It generates the session id via the AES128 encryption method
+     */
     @TestVisible
     protected String generateSessionId(String credentials)
     {
@@ -139,13 +146,17 @@ public virtual with sharing class FTB_UTL_Utils{
         String sessionId = JSON.serialize(encrypted);
         return sessionId;
     }
-
+    /**@frpanico
+     * This method return a serialized OperationResult wrapper
+    */
     @TestVisible
     protected String serializeMessage(String code, String description, String identificationKey)
     {
         return JSON.serialize(new FTB_WRP_OperationResult(code, description, identificationKey));
     }
-
+    /**@frpanico
+     * This method delete the queue
+     */
     @TestVisible
     protected void dequeue(FTB_Queue__c queue)
     {

@@ -1,5 +1,11 @@
+/**@frpanico
+ * This class handles the home page data fetch
+ */
 public with sharing class FTB_UTL_HomePageHome 
-{
+{ 
+    /**@frpanico
+     * Column Headers definition
+     */
     private static List<Map<String,String>> teamConfigMap = new List<Map<String,String>>
     {
       new Map<String,String>{'label' => 'Team', 'fieldName' => 'team'},
@@ -15,7 +21,9 @@ public with sharing class FTB_UTL_HomePageHome
       new Map<String,String>{'label' => 'Win', 'fieldName' => 'win'},
       new Map<String,String>{'label' => 'Loss', 'fieldName' => 'loss'}
     };
-
+    /**@frpanico
+     * This is the core method of the home data fetcher
+     */
     public static String fetchData(String sessionId)
     {
       try
@@ -28,7 +36,10 @@ public with sharing class FTB_UTL_HomePageHome
         return '';
       }
     }
-
+    /**@frpanico
+     * This method queries and builds the headers and data
+     * To return to the LWC
+     */
     private static String getHomeData(String sessionId)
     {
         Set<Id> championshipIds = new Set<Id>();
@@ -49,7 +60,9 @@ public with sharing class FTB_UTL_HomePageHome
   
         return JSON.serialize(result);
     }
-
+    /**@frpanico
+     * This method creates the header for the tables
+     */
     private static List<FTB_WRP_Utils.ColumnHeaderWrp> createHeader(List<Map<String, String>> configMap)
     {
         List<FTB_WRP_Utils.ColumnHeaderWrp> result = new List<FTB_WRP_Utils.ColumnHeaderWrp>();
@@ -63,6 +76,12 @@ public with sharing class FTB_UTL_HomePageHome
 
         return result;
     }
+    /**@frpanico
+     * This method creates Team data
+     * It has two layers
+     * The first contains the team data (id, Name, exc.)
+     * The second layer contains players data for each team
+     */
     private static List<FTB_WRP_Utils.HomePageHomeTeam> createTeamData(List<FTB_Team__c> teamList)
     {
         List<FTB_WRP_Utils.HomePageHomeTeam> result = new List<FTB_WRP_Utils.HomePageHomeTeam>();
@@ -87,6 +106,10 @@ public with sharing class FTB_UTL_HomePageHome
 
         return result;
     }
+    /**@frpanico
+     * This method builds the championship data
+     * With the rankings of the teams
+     */
     private static List<FTB_WRP_Utils.HomePageHomeChampionship> createChampionshipData(List<FTB_Championship__c> championshipList)
     {
         List<FTB_WRP_Utils.HomePageHomeChampionship> result = new List<FTB_WRP_Utils.HomePageHomeChampionship>();
@@ -111,6 +134,10 @@ public with sharing class FTB_UTL_HomePageHome
 
         return result;
     }
+    /**@frpanico
+     * This method builds calendar data
+     * It is used to find the next opponent for each team
+     */
     private static List<FTB_WRP_Utils.HomePageHomeCalendar> createCalendarData(List<FTB_Championship__c> championshipList, List<FTB_Team__c> teamList)
     {
       List<FTB_WRP_Utils.HomePageHomeCalendar> result = new List<FTB_WRP_Utils.HomePageHomeCalendar>();

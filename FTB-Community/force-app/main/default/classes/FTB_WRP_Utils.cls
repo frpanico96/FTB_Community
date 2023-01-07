@@ -62,6 +62,7 @@ public with sharing class FTB_WRP_Utils
             this.message = '';
         }
     }
+    /* Access Token response */
     public class TokenResponse
     {
         public String access_token;
@@ -71,11 +72,13 @@ public with sharing class FTB_WRP_Utils
         public String issued_at;
         public String signature;
     }
+    /* Column Header for the home page */
     public class ColumnHeaderWrp
     {
         public String label;
         public String fieldName;
     }
+    /* Wrapper for home page data */
     public class HomePageHomeWrp
     {
         public List<ColumnHeaderWrp> teamColumns;

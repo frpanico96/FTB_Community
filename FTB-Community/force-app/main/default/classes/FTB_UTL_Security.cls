@@ -1,3 +1,8 @@
+/**@frpanico
+ * Security clas
+ * This class is meant for custom encryption of sensitive data
+ * #### This class is not currently in use ####
+ */
 public with sharing class FTB_UTL_Security 
 {
 

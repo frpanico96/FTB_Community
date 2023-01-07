@@ -1,7 +1,14 @@
+/**@frpanico
+ * This class handles the Queue Custom Object Trigger
+ */
 public with sharing class FTB_TRH_Queue extends FTB_TRH_TriggerHandler
 {
     private static FTB_UTL_Utils ftbUtils = new FTB_UTL_Utils();
-    
+    /**@frpanico
+     * Based on the service passed through the record
+     * The Integration Configuration is retrieved
+     * And a platform event is fired to let the Salesforce Platform handles the task
+     */
     public override void afterInsert()
     {
         FTB_Queue__c currentQueue = (FTB_Queue__c) Trigger.new[0];

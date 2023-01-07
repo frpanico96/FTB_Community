@@ -1,3 +1,8 @@
+/**@frpanico
+ * Virtual class for trigger handler
+ * Expose a public method called run which calls the correct trigger event method
+ * Event method can be overriden if custom logic needs to be applied
+ */
 public virtual class FTB_TRH_TriggerHandler extends FTB_UTL_Utils
 {
     public virtual void run()

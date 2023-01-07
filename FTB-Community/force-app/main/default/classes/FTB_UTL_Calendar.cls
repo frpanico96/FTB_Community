@@ -6,7 +6,12 @@ public with sharing class FTB_UTL_Calendar extends FTB_UTL_Utils
     private static final String HOME_SIGN = 'VS';
     private static final String AWAY_SIGN = '@';
 
-
+    /**@frpanico
+     * This method takes in input the Calendar and the team
+     * Returns the next opponent in the form of a wrapper with two parameters
+     * 'homeAway'
+     * 'nextOpponent'
+     */
     public static FTB_WRP_Utils.HomePageHomeCalendar getNextOpponent(FTB_Calendar__c calendar, FTB_Team__c singleTeam)
     {
         FTB_WRP_Utils.HomePageHomeCalendar result = new FTB_WRP_Utils.HomePageHomeCalendar();
@@ -17,12 +22,12 @@ public with sharing class FTB_UTL_Calendar extends FTB_UTL_Utils
             {
                 if(calendarObj.homeId.equalsIgnoreCase(singleTeam.Id))
                 {
-                    result.homeAway = 'VS';
+                    result.homeAway = HOME_SIGN;
                     result.nextOpponent = calendarObj.away;       
                 }
                 else if(calendarObj.awayId.equalsIgnoreCase(singleTeam.Id))
                 {
-                    result.homeAway = '@';
+                    result.homeAway = AWAY_SIGN;
                     result.nextOpponent = calendarObj.home;       
                 }
             }       

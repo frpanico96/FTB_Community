@@ -4,12 +4,20 @@
  */
 public with sharing class FTB_UTL_ErrorLog extends FTB_UTL_Utils 
 {
+    /**@frpanico
+     * This method is meant to be used
+     * to trace generic errors
+     */
     public FTB_UTL_ErrorLog(String service, String errorCode, String errorDescription)
     {
         insertSObject(new FTB_ErrorLog__c(FTB_Service__c = service,
             FTB_ErrorCode__c = errorCode, 
             FTB_ErrorDescription__c = errorDescription));
     }
+    /**@frpanico
+     * This method is meant to be used
+     * to trace integration errors
+     */
     public FTB_UTL_ErrorLog(String service, String errorCode, String errorDescription, String request, String response)
     {
         insertSObject(new FTB_ErrorLog__c(FTB_Service__c = service, 
