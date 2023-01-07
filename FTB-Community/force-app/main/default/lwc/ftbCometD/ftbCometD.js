@@ -1,3 +1,9 @@
+/**@frpanico
+ * CometD component
+ * this components load the CometD library
+ * Which is used to listen from external website (guest page included) 
+ * Platform events fired from the Salesforce Platform
+ */
 import { LightningElement, api, track, wire } from 'lwc';
 
 import { loadScript } from "lightning/platformResourceLoader";
@@ -13,29 +19,10 @@ export default class FtbCometD extends LightningElement
   @track sessionId;
   @track error; 
 
-
-  /*
-  @wire(getSessionId)
-  wiredSessionId({error, data})
-  {
-    console.log('Wiring Data' + JSON.stringify(data));
-    console.log('Param1 >>> ' +  window.location.protocol + '//' + window.location.hostname + '/cometd/51.0');
-    if(data === null) 
-    {
-      this.sessionId = data;
-      this.error = undefined;
-      loadScript(this, cometdLwc)
-      .then(() => {this.initializeCometD()})
-    }
-    else if(error)
-    {
-      console.log('error');
-      this.error = error;
-      this.sessionId = undefined;
-    }
-  }
-  */
-  
+  /**@frpanico
+   * As soon as the sessionId is retrieved (access_token)
+   * CometD can be intialized to subscribe to a platform event
+   */
   @api
   cometdCallback = (sessionId) =>
   {
@@ -44,7 +31,11 @@ export default class FtbCometD extends LightningElement
     loadScript(this, cometdLwc)
     .then(() => {this.initializeCometD()});
   }
-
+  /**@frpanico
+   * This method allows CometD to subscribe
+   * To a platform event and listen to it
+   * When the event is received a custom event is fired
+   */
   initializeCometD = () => 
   {
     console.log('Initizalization');

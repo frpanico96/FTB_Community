@@ -1,3 +1,7 @@
+/**@frpanico
+ * This is the core component for the HomePage
+ * Renders all the data about teams, nextOpponent and championship
+ */
 import { LightningElement, api, track } from 'lwc';
 /* Import data fetcher */
 import fetchData from '@salesforce/apex/FTB_LC_HomePageHome.fetchData';
@@ -22,7 +26,10 @@ export default class FtbHomePageHome extends FtbUtils
 
   @track loadingSpinner = true;
   @track errorMessage;
-
+  /**@frpanico
+   * Api method that can be called from the HomePageBody component
+   * To start the data fetching
+   */
   @api
   homeInitialization(sessionId)
   {
@@ -37,6 +44,12 @@ export default class FtbHomePageHome extends FtbUtils
       this.loadingSpinner = false;
     });
   }
+  /**@frpanico
+   * Api method that can be called from the HomePageBody component
+   * As soon as the platform event is listened by CometD
+   * This method organizes data received from the SFDC platform
+   * And shows them.
+   */
   @api
   homeConfiguration(event)
   {

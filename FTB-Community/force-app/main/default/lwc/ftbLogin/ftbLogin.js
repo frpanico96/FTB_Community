@@ -60,7 +60,9 @@ export default class FtbLogin extends FtbUtils
             this.showMessage(NOTIFICATION_ERROR_TITLE,JSON.stringify(error),NOTIFICATION_ERROR_VARIANT);
         })
     }
-
+    /**@frpanico
+     * This method initialize CometD Subscription
+     */
     handleCometdSubscription = () => 
     {
         handleCometdSubscription()
@@ -77,7 +79,10 @@ export default class FtbLogin extends FtbUtils
             }
         )
     }
-
+    /**@frpanico
+     * This method start the login/registration
+     * Operations
+     */
     makeRegisterLogin = event =>
     {
         this.loadingSpinner = true;
@@ -123,7 +128,9 @@ export default class FtbLogin extends FtbUtils
 
     }
 
-
+    /**@frpanico
+     * This method redirects to the home page
+     */
     handleLogin = sessionId =>
     {
         console.log('Starting Navigation');

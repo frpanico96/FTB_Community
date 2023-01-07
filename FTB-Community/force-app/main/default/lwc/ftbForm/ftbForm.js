@@ -1,3 +1,7 @@
+/**@frpanico
+ * Generic form component
+ * When the Sign In/Sign Up button is clicked it dispatches a custom event
+ */
 import { LightningElement, track, api } from 'lwc';
 
 export default class FtbForm extends LightningElement
