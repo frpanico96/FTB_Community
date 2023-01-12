@@ -19,4 +19,29 @@ public with sharing class FTB_LC_UtilsTest
         Test.stopTest();
         System.assertEquals(true, String.isNotBlank(result),'get configuration failed');
     }
+    @isTest
+    static void handleCometdSubscriptionTest()
+    {
+        FTB_WS_TestMock.setMock(FTB_WS_IntegrationTest.CometdMock.class);
+        Test.startTest();
+            String result = FTB_LC_Utils.handleCometdSubscription();
+        Test.stopTest();
+        System.assertEquals(true, String.isNotBlank(result),'Subscription not succeded');
+    }
+    @isTest
+    static void handleCometdSubscriptionErrorTest()
+    {
+        String result = '';    
+        Test.startTest();
+        try
+        {
+            result = FTB_LC_Utils.handleCometdSubscription();
+        }
+        catch(Exception e)
+        {
+            result = '';
+        }
+        Test.stopTest();
+        System.assertEquals(true, String.isBlank(result),'Exception not handled');
+    } 
 }
