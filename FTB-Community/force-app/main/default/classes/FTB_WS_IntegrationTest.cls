@@ -66,5 +66,17 @@ public with sharing class FTB_WS_IntegrationTest
             return response;
         }
     }
+    public class CometdMock implements HttpCalloutMock
+    {
+        public HttpResponse respond(HttpRequest request)
+        {
+            HttpResponse response = new HttpResponse();
+            String body = '{"access_token":"test", "instance_url":"test","id":"test","token_type":"test","issued_at":"test","signature":"test"}';
+            response.setHeader('Content-Type', 'application/json');
+            response.setBody(body);
+            response.setStatusCode(200);
+            return response;
+        }
+    }
 
 }
