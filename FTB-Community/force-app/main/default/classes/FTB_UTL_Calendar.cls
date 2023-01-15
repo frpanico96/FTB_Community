@@ -35,12 +35,12 @@ public with sharing class FTB_UTL_Calendar extends FTB_UTL_Utils
         return result;
     }
     /* To be completed */
-    private static List<FTB_WRP_Utils.CalendarObj> getUserTeamsPairings(List<FTB_Team__c> teamList, FTB_Calendar__c calendar)
-    {
-        List<FTB_WRP_Utils.CalendarObj> result = new List<FTB_WRP_Utils.CalendarObj>(); 
-        Set<String> teamsId = FTB_UTL_Team.getSetIdFromList(teamList);
-        return result;
-    }
+    // private static List<FTB_WRP_Utils.CalendarObj> getUserTeamsPairings(List<FTB_Team__c> teamList, FTB_Calendar__c calendar)
+    // {
+    //     List<FTB_WRP_Utils.CalendarObj> result = new List<FTB_WRP_Utils.CalendarObj>(); 
+    //     Set<String> teamsId = FTB_UTL_Team.getSetIdFromList(teamList);
+    //     return result;
+    // }
     private static List<FTB_WRP_Utils.CalendarObj> getPairings(FTB_Calendar__c calendar)
     {
         List<FTB_WRP_Utils.CalendarObj> result = new List<FTB_WRP_Utils.CalendarObj>();

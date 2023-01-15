@@ -76,7 +76,7 @@ public with sharing class FTB_UTL_DataFactory
         {
             FTB_Team__c team = new FTB_Team__c();
             team.FTB_Championship__c = championshipId;
-            team.FTB_ShortName__c = 'tst';
+            team.FTB_ShortName__c = 't'+i;
             team.FTB_Win__c = 5;
             team.FTB_Loss__c = 1;
             teamList.add(team);
@@ -86,5 +86,20 @@ public with sharing class FTB_UTL_DataFactory
             insert teamList;
         }
         return teamList;
+    }
+    public static List<FTB_Calendar__c> createCalendar(Boolean create, Integer numberOfRecords, String championshipId)
+    {
+        List<FTB_Calendar__c> calendarList = new List<FTB_Calendar__c>();
+        for(Integer i = 0; i < numberOfRecords; ++i)
+        {
+            FTB_Calendar__c calendar = new FTB_Calendar__c();
+            calendar.FTB_Championship__c = championshipId;
+            calendarList.add(calendar);
+        }
+        if(!calendarList.isEmpty() && create)
+        {
+            insert calendarList;
+        }
+        return calendarList;
     }
 }
