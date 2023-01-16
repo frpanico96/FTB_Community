@@ -12,6 +12,7 @@ public with sharing class FTB_UTL_UtilsTest
     static void setup()
     {
         List<FTB_Player__c> players = FTB_UTL_DataFactory.createPlayers(true, 3);
+        List<FTB_Queue__c> queueList = FTB_UTL_DataFactory.createQueue(true, 1);
     }
 
     @isTest
@@ -97,6 +98,33 @@ public with sharing class FTB_UTL_UtilsTest
         System.assertEquals(null, timeTest, 'Time failed');
 
     }
-
-
+    @isTest
+    static void generateSessionIdTest()
+    {
+        FTB_UTL_Utils testClass = new FTB_UTL_Utils();
+        Test.startTest();
+            String result = testClass.generateSessionId('test');
+        Test.stopTest();
+        System.assertEquals(true, String.isNotBlank(result), 'Session not generated');
+    }
+    @isTest
+    static void serializeMessageTest()
+    {
+        FTB_UTL_Utils testClass = new FTB_UTL_Utils();
+        Test.startTest();
+            String result = testClass.serializeMessage('test', 'test', 'test'); 
+        Test.stopTest();
+        System.assertEquals(true, String.isNotBlank(result), 'Message not serialized');
+    }
+    @isTest
+    static void dequeueTest()
+    {
+        FTB_UTL_Utils testClass = new FTB_UTL_Utils();
+        List<FTB_Queue__c> queueList = [SELECT Id FROM FTB_Queue__c];
+        Test.startTest();
+            testClass.dequeue(queueList[0]);
+        Test.stopTest();
+        List<FTB_Queue__c> result = [SELECT Id FROM FTB_Queue__c];
+        System.assertEquals(true, result.isEmpty(), 'Queue not dequeued');
+    }
 }

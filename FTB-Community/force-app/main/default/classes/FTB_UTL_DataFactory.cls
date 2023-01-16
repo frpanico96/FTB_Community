@@ -102,4 +102,19 @@ public with sharing class FTB_UTL_DataFactory
         }
         return calendarList;
     }
+    public static List<FTB_Queue__c> createQueue(Boolean create, Integer numberOfRecords)
+    {
+        List<FTB_Queue__c> queueList = new List<FTB_Queue__c>();
+        for(Integer i = 0; i < numberOfRecords; ++i)
+        {
+            FTB_Queue__c singleQueue = new FTB_Queue__c();
+            singleQueue.FTB_Payload__c = JSON.serialize(new Map<String, String>{'test' => 'test'});
+            queueList.add(singleQueue);
+        }
+        if(!queueList.isEmpty() && create)
+        {
+            insert queueList;
+        }
+        return queueList;
+    }
 }
