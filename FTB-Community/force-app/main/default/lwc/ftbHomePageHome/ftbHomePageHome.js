@@ -7,6 +7,7 @@ import { LightningElement, api, track } from 'lwc';
 import fetchData from '@salesforce/apex/FTB_LC_HomePageHome.fetchData';
 /* Import Utils Component */
 import FtbUtils from 'c/ftbUtils';
+import RecurrenceStartDateOnly from '@salesforce/schema/Task.RecurrenceStartDateOnly';
 
 const CHAMPIONSHIP_RANK = 'championshipRank';
 const CHAMPIONSHIP_NAME = 'championshipName';
@@ -26,6 +27,7 @@ export default class FtbHomePageHome extends FtbUtils
 
   @track loadingSpinner = true;
   @track errorMessage;
+  @track fetchRequested = false;
   /**@frpanico
    * Api method that can be called from the HomePageBody component
    * To start the data fetching
@@ -34,6 +36,8 @@ export default class FtbHomePageHome extends FtbUtils
   homeInitialization(sessionId)
   {
     if(!sessionId) return;
+    if(this.fetchRequested) return;
+    this.fetchRequested = true;
     fetchData({sessionId: sessionId})
     .then(data =>{
       console.log('@@@ Start Fetching');
