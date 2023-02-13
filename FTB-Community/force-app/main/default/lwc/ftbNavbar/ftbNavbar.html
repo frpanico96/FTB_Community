@@ -1,3 +1,4 @@
+<!-- sldsValidatorIgnore -->
 <template>
 <div class="ftb-navbar-container slds-var-p-around_small">
     <div class="slds-grid slds-gutters">
@@ -5,13 +6,29 @@
             <lightning-layout horizontal-align="space">
                 <template for:each={navItems} for:item="navItem">
                     <lightning-layout-item key={navItem.name}>
-                        <div class="ftb-nav-item custom-boxl">{navItem.label}</div>
+                        <lightning-button 
+                            class="ftb-nav-item custom-boxl"
+                            name={navItem.name}
+                            variant="base"
+                            label={navItem.label}
+                            onclick={btnClick}>
+                            </lightning-button>
                     </lightning-layout-item>
                 </template>
             </lightning-layout>
         </div>
         <div class="slds-col slds-size_1-of-6">
-            <h1 class="ftb-nav-h1 slds-align_absolute-center slds-var-m-right_small">Profile</h1>
+            <lightning-button-icon
+            name="profile"
+            class="slds-align_absolute-center
+            slds-var-p-top_xxx-small"
+            size="large"
+            icon-name="utility:lead"
+            variant="bare"
+            onclick={btnClick}
+            alternative-text="Profile">
+            </lightning-button-icon>
+            <!--<h1 class="ftb-nav-h1 slds-align_absolute-center slds-var-m-right_small">Profile</h1>-->
         </div>
     </div>
 </div> 

@@ -2,7 +2,19 @@
   <!--CometD installation to listen for events-->
   <c-ftb-comet-d channel="/event/FTB_PEV_NotificationMessage__e" onsubscribemessage={handleSubscribeEvent}></c-ftb-comet-d>
   <!--Body of the home. It changes based on the button pressed on the home nav bar-->
-  <section if:true={homePage}>
+  <section if:true={homePage.mainpage}>
     <c-ftb-home-page-home></c-ftb-home-page-home>
+  </section>
+  <section if:true={homePage.teamspage}>
+    <h1>TEAM PAGE</h1>
+  </section>
+  <section if:true={homePage.standingpage}>
+    <h1>STANDING PAGE</h1>
+  </section>
+  <section if:true={homePage.tradepage}>
+    <h1>TRADE PAGE</h1>
+  </section>
+  <section if:true={homePage.profilepage}>
+    <h1>PROFILE PAGE</h1>
   </section>
 </template>
