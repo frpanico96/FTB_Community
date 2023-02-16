@@ -10,6 +10,19 @@ import getConfiguration from '@salesforce/apex/FTB_LC_Utils.getConfiguration';
 
 export default class FtbUtils extends NavigationMixin(LightningElement) {
 
+
+    @api constantsObj =
+    {
+        MAIN: 'main',
+        TEAMS: 'teams',
+        STANDINGS: 'standings',
+        TRADES: 'trades',
+        PROFILE: 'profile'
+    }
+    @api focusObj =
+    {
+        main: 'c-ftb-home-page-home',
+    } 
     /**@frpanico 2022-02-06
      * FTB
      * Method to get component name
