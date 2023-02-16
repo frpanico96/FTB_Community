@@ -15,7 +15,10 @@ export default class FtbHomePageBody extends FtbUtils
 {
   @api homePage = false;
 
-  @track focusObj = {home: 'c-ftb-home-page-home'};
+  @track sessionId;
+
+
+  //@track focusObj = {home: 'c-ftb-home-page-home'};
   /**@frpanico
    * This method is aware of the page being rendered from the page state
    * Calls the correct child component to fetch/initialize data
@@ -28,8 +31,12 @@ export default class FtbHomePageBody extends FtbUtils
       console.log(currentPageReference);
       if(!currentPageReference.state) return;
       setTimeout(() => {
-        const componentObj = this.template.querySelector(this.focusObj['home']);
-        componentObj.homeInitialization(currentPageReference.state['payload']);
+        console.log('### FocusObj: ' + JSON.stringify(this.focusObj));
+        console.log('### MainObj: ' + this.focusObj[this.constantsObj.MAIN]);
+        const componentObj = this.template.querySelector(this.focusObj[this.constantsObj.MAIN]);
+        this.sessionId = currentPageReference.state['payload'];
+        console.log('### SessionId: ' + this.sessionId);
+        componentObj.homeInitialization(this.sessionId);
       }, 3000);
     }
   }
@@ -64,9 +71,7 @@ export default class FtbHomePageBody extends FtbUtils
    */
   handleSubscribeEvent(event)
   {
-    const componentObj = this.template.querySelector(this.focusObj['home']);
+    const componentObj = this.template.querySelector(this.focusObj[this.constantsObj.MAIN]);
     componentObj.homeConfiguration(event);
   }
-
-
 }
