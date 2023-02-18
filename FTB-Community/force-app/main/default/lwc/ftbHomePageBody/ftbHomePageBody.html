@@ -3,7 +3,9 @@
   <c-ftb-comet-d channel="/event/FTB_PEV_NotificationMessage__e" onsubscribemessage={handleSubscribeEvent}></c-ftb-comet-d>
   <!--Body of the home. It changes based on the button pressed on the home nav bar-->
   <section if:true={homePage.mainpage}>
-    <c-ftb-home-page-home></c-ftb-home-page-home>
+    <c-ftb-home-page-home
+    onconnecting={handleConnectionEvent}
+    ondisconnecting={handleConnectionEvent}></c-ftb-home-page-home>
   </section>
   <section if:true={homePage.teamspage}>
     <h1>TEAM PAGE</h1>

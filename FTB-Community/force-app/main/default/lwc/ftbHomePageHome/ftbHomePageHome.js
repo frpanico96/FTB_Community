@@ -116,4 +116,18 @@ export default class FtbHomePageHome extends FtbUtils
     }
     this.loadingSpinner = false;
   }
+
+  connectedCallback()
+  {
+    console.log('### Connecting...');
+    const connectingEvent = new CustomEvent('connecting',{ detail: this.constantsObj.MAIN});
+    this.dispatchEvent(connectingEvent);
+  }
+  disconnectedCallback()
+  {
+    console.log('### disconnecting...');
+    const connectingEvent = new CustomEvent('disconnecting',{ detail: this.constantsObj.MAIN});
+    this.dispatchEvent(connectingEvent);
+  }
+
 }
