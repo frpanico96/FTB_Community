@@ -25,14 +25,11 @@ export default class FtbHomePage extends FtbUtils
       console.log(JSON.stringify(this.homePage));
       return;
     }
-    this.homePage = 
-    [
-      {name: this.constantsObj.MAIN, cmp: this.focusObj[this.constantsObj.MAIN], state: 1},
-      {name: this.constantsObj.TEAMS, cmp: this.focusObj[this.constantsObj.TEAMS], state: 0},
-      {name: this.constantsObj.STANDINGS, cmp: this.focusObj[this.constantsObj.STANDINGS], state: 0},
-      {name: this.constantsObj.TRADES, cmp: this.focusObj[this.constantsObj.TRADES], state: 0},
-      {name: this.constantsObj.PROFILE, cmp: this.focusObj[this.constantsObj.PROFILE], state: 0},
-    ]
+    this.homePage.mainpage = true;
+    this.homePage.teamspage = false;
+    this.homePage.standingpage = false;
+    this.homePage.tradepage = false;
+    this.homePage.profilepage = false;
     return;
   }
 
