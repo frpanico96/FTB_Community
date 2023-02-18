@@ -15,14 +15,27 @@ export default class FtbHomePage extends FtbUtils
     {name: 'trades', label: 'Trades'},
   ]
 
-  @track homePage = 
+  @track homePage = {}
+
+  connectedCallback()
   {
-    mainpage: true,
-    teamspage: false,
-    standingpage: false,
-    tradepage: false,
-    profilepage: false
+    if(sessionStorage.getItem('state'))
+    {
+      this.homePage = JSON.parse(sessionStorage.getItem('state'));
+      console.log(JSON.stringify(this.homePage));
+      return;
+    }
+    this.homePage = 
+    [
+      {name: this.constantsObj.MAIN, cmp: this.focusObj[this.constantsObj.MAIN], state: 1},
+      {name: this.constantsObj.TEAMS, cmp: this.focusObj[this.constantsObj.TEAMS], state: 0},
+      {name: this.constantsObj.STANDINGS, cmp: this.focusObj[this.constantsObj.STANDINGS], state: 0},
+      {name: this.constantsObj.TRADES, cmp: this.focusObj[this.constantsObj.TRADES], state: 0},
+      {name: this.constantsObj.PROFILE, cmp: this.focusObj[this.constantsObj.PROFILE], state: 0},
+    ]
+    return;
   }
+
 
   handleNavigation(event)
   {
@@ -41,7 +54,7 @@ export default class FtbHomePage extends FtbUtils
         this.homePage.teamspage = true;
         this.homePage.standingpage = false;
         this.homePage.tradepage = false;
-        this.homePage.profilepage = false;
+        this.homePage.profilepage = false;    
         break;
       case this.constantsObj.STANDINGS:
         this.homePage.mainpage = false;
@@ -65,5 +78,14 @@ export default class FtbHomePage extends FtbUtils
         this.homePage.profilepage = true;
         break;
     }
+    console.log('### HomePage state: ' + JSON.stringify(this.homePage));
+    this.setSessionStorage();
+  }
+
+  setSessionStorage()
+  {
+    console.log(JSON.stringify(this.homePage));
+    sessionStorage.setItem('state', JSON.stringify(this.homePage));
+    console.log(JSON.stringify(sessionStorage.getItem('state')));
   }
 }

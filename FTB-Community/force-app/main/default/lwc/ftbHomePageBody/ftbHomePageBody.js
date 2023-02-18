@@ -17,11 +17,18 @@ export default class FtbHomePageBody extends FtbUtils
 
   @track sessionId;
 
+  @track connState =
+  [
+   
+  ]
+
 
   //@track focusObj = {home: 'c-ftb-home-page-home'};
   /**@frpanico
    * This method is aware of the page being rendered from the page state
-   * Calls the correct child component to fetch/initialize data
+   * Calls the main page child component to fetch/initialize data
+   * It is used only on the first load, following page reloads are handled by
+   * Connecting/Disconnecting events.
    */
   @wire(CurrentPageReference)
   currentPageParameters(currentPageReference)
@@ -31,6 +38,7 @@ export default class FtbHomePageBody extends FtbUtils
       console.log(currentPageReference);
       if(!currentPageReference.state) return;
       setTimeout(() => {
+        if(sessionStorage.getItem('state')) return;
         console.log('### FocusObj: ' + JSON.stringify(this.focusObj));
         console.log('### MainObj: ' + this.focusObj[this.constantsObj.MAIN]);
         const componentObj = this.template.querySelector(this.focusObj[this.constantsObj.MAIN]);
@@ -46,6 +54,13 @@ export default class FtbHomePageBody extends FtbUtils
   connectedCallback()
   {
     console.log('@@@ Starting Connection');
+    this.connState = [
+      {name: this.constantsObj.MAIN, cmp: this.focusObj[this.constantsObj.MAIN], status: -1},
+      {name: this.constantsObj.TEAMS, cmp: this.focusObj[this.constantsObj.TEAMS], status: 0},
+      {name: this.constantsObj.STANDINGS, cmp: this.focusObj[this.constantsObj.STANDINGS], status: 0},
+      {name: this.constantsObj.TRADES, cmp: this.focusObj[this.constantsObj.TRADES], status: 0},
+      {name: this.constantsObj.PROFILE, cmp: this.focusObj[this.constantsObj.PROFILE], status: 0},
+    ]
     this.handleCometDSubscription();
   }
   /**@frpanico
@@ -73,5 +88,27 @@ export default class FtbHomePageBody extends FtbUtils
   {
     const componentObj = this.template.querySelector(this.focusObj[this.constantsObj.MAIN]);
     componentObj.homeConfiguration(event);
+  }
+
+  handleConnectionEvent(event)
+  {
+    console.log('### Connection Event --> ' + JSON.stringify(event));
+    console.log('### Connection State --> ' + JSON.stringify(this.connState));
+
+    if(event.type === 'disconnecting')
+    {
+      this.connState[this.connState.findIndex(el => el.name === event.detail)]['status'] = 0;
+    }
+    else if(event.type === 'connecting')
+    {
+      const currentCmp = this.connState[this.connState.findIndex(el => el.name === event.detail)];
+      if(currentCmp['status'] === 0)
+      {
+        this.connState[this.connState.findIndex(el => el.name === event.detail)]['status'] = 1;
+        const cmp = this.template.querySelector(currentCmp['cmp']);
+        console.log(cmp);
+        cmp.homeInitialization(this.sessionId);
+      }
+    }
   }
 }
