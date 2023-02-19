@@ -9,11 +9,19 @@ public with sharing class FTB_WS_Integration
     /* Memeber variables */
     /* service represents the service to be called */
     private FTB_ENM_Service service;
+    private Boolean noHeader = false;
+    private Boolean noTimeount = false;
     private FTB_QR_Utils qrUtils = new FTB_QR_Utils();
 
     public FTB_WS_Integration(FTB_ENM_Service service)
     {
         this.service = service;
+    }
+    public FTB_WS_Integration(FTB_ENM_Service service, Boolean noHeader, Boolean noTimeount)
+    {
+        this.service = service;
+        this.noHeader = noHeader;
+        this.noTimeount = noTimeount;
     }
     /* The execute method is the core method
     * it creates the body
@@ -45,10 +53,19 @@ public with sharing class FTB_WS_Integration
         try
         {
             request.setEndpoint(dataFetcher.setEndpoint(integrationMap.get('endpoint')));
-            request.setHeader('Content-Type', 'application/json');
+            if(!this.noHeader)
+            {
+                request.setHeader('Content-Type', 'application/json');
+            }
             request.setMethod(integrationMap.get('method'));
-            request.setTimeout(12000);
-
+            if(!this.noTimeount)
+            {
+                request.setTimeout(12000);
+            }
+            if('POST'.equalsIgnoreCase(integrationMap.get('method')))
+            {
+                request.setBody(dataFetcher.setBody());
+            }
             response = http.send(request);
         }
         catch(Exception e)

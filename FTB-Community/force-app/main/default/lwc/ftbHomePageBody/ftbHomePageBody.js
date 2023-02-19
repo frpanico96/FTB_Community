@@ -38,12 +38,12 @@ export default class FtbHomePageBody extends FtbUtils
       console.log(currentPageReference);
       if(!currentPageReference.state) return;
       setTimeout(() => {
-        if(sessionStorage.getItem('state')) return;
         console.log('### FocusObj: ' + JSON.stringify(this.focusObj));
         console.log('### MainObj: ' + this.focusObj[this.constantsObj.MAIN]);
         const componentObj = this.template.querySelector(this.focusObj[this.constantsObj.MAIN]);
         this.sessionId = currentPageReference.state['payload'];
         console.log('### SessionId: ' + this.sessionId);
+        if(sessionStorage.getItem('state')) return;
         componentObj.homeInitialization(this.sessionId);
       }, 3000);
     }
@@ -55,12 +55,13 @@ export default class FtbHomePageBody extends FtbUtils
   {
     console.log('@@@ Starting Connection');
     this.connState = [
-      {name: this.constantsObj.MAIN, cmp: this.focusObj[this.constantsObj.MAIN], status: -1},
+      {name: this.constantsObj.MAIN, cmp: this.focusObj[this.constantsObj.MAIN], status: 0},
       {name: this.constantsObj.TEAMS, cmp: this.focusObj[this.constantsObj.TEAMS], status: 0},
       {name: this.constantsObj.STANDINGS, cmp: this.focusObj[this.constantsObj.STANDINGS], status: 0},
       {name: this.constantsObj.TRADES, cmp: this.focusObj[this.constantsObj.TRADES], status: 0},
       {name: this.constantsObj.PROFILE, cmp: this.focusObj[this.constantsObj.PROFILE], status: 0},
     ]
+    this.handleStatusStorage();
     this.handleCometDSubscription();
   }
   /**@frpanico
@@ -89,9 +90,16 @@ export default class FtbHomePageBody extends FtbUtils
     const componentObj = this.template.querySelector(this.focusObj[this.constantsObj.MAIN]);
     componentObj.homeConfiguration(event);
   }
-
+  /* This method handles connection and disconnction events
+  * From child components
+  * On refresh in order to allow the component to set the sessionId
+  * The connection event needs to wait for it
+  */
   handleConnectionEvent(event)
   {
+
+    if(!sessionStorage.getItem('state')) return;
+
     console.log('### Connection Event --> ' + JSON.stringify(event));
     console.log('### Connection State --> ' + JSON.stringify(this.connState));
 
@@ -101,14 +109,28 @@ export default class FtbHomePageBody extends FtbUtils
     }
     else if(event.type === 'connecting')
     {
-      const currentCmp = this.connState[this.connState.findIndex(el => el.name === event.detail)];
-      if(currentCmp['status'] === 0)
+      setTimeout( () => 
       {
-        this.connState[this.connState.findIndex(el => el.name === event.detail)]['status'] = 1;
-        const cmp = this.template.querySelector(currentCmp['cmp']);
-        console.log(cmp);
-        cmp.homeInitialization(this.sessionId);
-      }
-    }
+        const currentCmp = this.connState[this.connState.findIndex(el => el.name === event.detail)];
+        console.log(currentCmp);
+        if(currentCmp['status'] === 0)
+        {
+          this.connState[this.connState.findIndex(el => el.name === event.detail)]['status'] = 1;
+          const cmp = this.template.querySelector(currentCmp['cmp']);
+          console.log(cmp);
+          cmp.homeInitialization(this.sessionId);
+        }
+      }, 3000);
+   }
+  }
+  /* Since on refresh the connectedCallback resets the connState
+  * If the currentState is set on the main page its state is set to 0
+  * In order to make the component reloads data
+  */
+  handleStatusStorage()
+  {
+    if(!sessionStorage.getItem('state')) return;
+    let connObj = JSON.parse(sessionStorage.getItem('state'));
+    if(connObj.mainpage) this.connState[this.connState.findIndex(el => el.name === this.constantsObj.MAIN)]['status'] = 0;
   }
 }

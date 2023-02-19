@@ -1,7 +1,7 @@
 /**@frpanico 2022-02-06
  * Controller for LWC ftbUtils
  */
-public with sharing class FTB_LC_Utils extends FTB_UTL_Utils
+public with sharing class FTB_LC_Utils extends FTB_UTL_Utils implements FTB_INF_FetchData
 {
 
     @AuraEnabled(cacheable=true)
@@ -66,20 +66,13 @@ public with sharing class FTB_LC_Utils extends FTB_UTL_Utils
     {
         try
         {
-            FTB_CMT_IntegrationConfiguration__mdt integrationConfigurations = FTB_CMT_IntegrationConfiguration__mdt.getInstance('FTB_CometDSubscription');
-
-            String CLIENT_ID = integrationConfigurations.FTB_ClassName__c;
-            String CLIENT_SEC = integrationConfigurations.FTB_Endpoint__c;
-            String USERNAME = integrationConfigurations.FTB_EnumService__c;
-            String KEYWORD = integrationConfigurations.FTB_Method__c;
-
-            /* Make API call to connect to salesforce */
-            Http http = new Http();
-            String body = 'grant_type=password' + '&' + 'client_id='+CLIENT_ID+'&'+'client_secret='+CLIENT_SEC+'&'+'username='+USERNAME+'&'+'password='+KEYWORD;
-
-            FTB_WS_Utils calloutUtils = new FTB_WS_Utils('https://login.salesforce.com/services/oauth2/token','POST',12000,body);
-            HttpResponse response = calloutUtils.makeCallout();
-            FTB_WRP_Utils.TokenResponse responseBody = (FTB_WRP_Utils.TokenResponse) JSON.deserialize(response.getBody(), FTB_WRP_Utils.TokenResponse.class);
+            FTB_WS_Integration integration = new FTB_WS_Integration(FTB_ENM_Service.LOG_SFDC, true, true);
+            
+            // /* Make API call to connect to salesforce */
+            // Http http = new Http();
+            // FTB_WS_Utils calloutUtils = new FTB_WS_Utils('https://login.salesforce.com/services/oauth2/token','POST',12000,body);
+            // HttpResponse response = calloutUtils.makeCallout();
+            FTB_WRP_Utils.TokenResponse responseBody = getAccessToken(integration.execute()); //(FTB_WRP_Utils.TokenResponse) JSON.deserialize(response.getBody(), FTB_WRP_Utils.TokenResponse.class);
 
             return responseBody.access_token;
         }
@@ -89,5 +82,34 @@ public with sharing class FTB_LC_Utils extends FTB_UTL_Utils
         }
     }
 
+
+    /*Interface methods*/
+    public String setEndpoint(String endpoint)
+    {
+        return endpoint;
+    }
+    public String setBody()
+    {
+        FTB_CMT_IntegrationConfiguration__mdt integrationConfigurations = FTB_CMT_IntegrationConfiguration__mdt.getInstance('FTB_CometDSubscription');
+
+        String CLIENT_ID = integrationConfigurations.FTB_ClassName__c;
+        String CLIENT_SEC = integrationConfigurations.FTB_Endpoint__c;
+        String USERNAME = integrationConfigurations.FTB_EnumService__c;
+        String KEYWORD = integrationConfigurations.FTB_Method__c;
+
+        return 'grant_type=password' + '&' + 'client_id='+CLIENT_ID+'&'+'client_secret='+CLIENT_SEC+'&'+'username='+USERNAME+'&'+'password='+KEYWORD;
+    }
+    public FTB_WRP_OperationResult handleResponse(String bodyResponse)
+    {
+        return new FTB_WRP_OperationResult(bodyResponse, '');
+    }
+    private static FTB_WRP_Utils.TokenResponse getAccessToken(FTB_WRP_OperationResult operationResult)
+    {
+        return (FTB_WRP_Utils.TokenResponse) JSON.deserialize(operationResult.ERROR_CODE, FTB_WRP_Utils.TokenResponse.class);
+    }
+    public void operate(List<FTB_WRP_Scope> scope)
+    {
+        return;
+    }
 
 }

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Log SFDC</label>
+    <protected>false</protected>
+    <values>
+        <field>FTB_ClassName__c</field>
+        <value xsi:type="xsd:string">FTB_LC_Utils</value>
+    </values>
+    <values>
+        <field>FTB_Endpoint__c</field>
+        <value xsi:type="xsd:string">https://login.salesforce.com/services/oauth2/token</value>
+    </values>
+    <values>
+        <field>FTB_EnumService__c</field>
+        <value xsi:type="xsd:string">LOG_SFDC</value>
+    </values>
+    <values>
+        <field>FTB_Method__c</field>
+        <value xsi:type="xsd:string">POST</value>
+    </values>
+</CustomMetadata>
