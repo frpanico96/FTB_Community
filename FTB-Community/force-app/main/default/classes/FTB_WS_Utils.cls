@@ -2,6 +2,7 @@
  * This class operates in addition to FTB_WS_Integration
  * Sometimes it is not possible to make straightforward callouts
  * It may be dismissed and be replaced by FTB_WS_Integration
+ * UP: The class have been replace by FTB_WS_Integration
  */
 public with sharing class FTB_WS_Utils
 {

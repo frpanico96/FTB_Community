@@ -7,5 +7,6 @@ public enum FTB_ENM_Service
 {
     GET_PLAYERS,
     SIGN,
-    FETCH_HOME
+    FETCH_HOME,
+    LOG_SFDC
 }
