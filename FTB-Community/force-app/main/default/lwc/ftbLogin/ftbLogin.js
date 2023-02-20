@@ -16,6 +16,8 @@ const NOTIFICATION_SUCCESS_TITLE = 'Success';
 const NOTIFICATION_SUCCESS_VARIANT = 'success';
 const NOTIFICATION_SUCCESS_MODE = 'pester';
 
+const NOTIFICATION_SUCCESS_DESCRIPTION = 'Login Successfully';
+
 const PEV_CHANNEL = '/event/FTB_PEV_NotificationMessage__e';
 
 export default class FtbLogin extends FtbUtils 
@@ -117,7 +119,7 @@ export default class FtbLogin extends FtbUtils
         if(this.username !== response.IDENTIFICATION_KEY) return;
         if(response.SUCCESS)
         {
-            this.showMessage(NOTIFICATION_SUCCESS_TITLE, response.ERROR_MESSAGE, NOTIFICATION_SUCCESS_VARIANT, NOTIFICATION_SUCCESS_MODE);
+            this.showMessage(NOTIFICATION_SUCCESS_TITLE, NOTIFICATION_SUCCESS_DESCRIPTION, NOTIFICATION_SUCCESS_VARIANT, NOTIFICATION_SUCCESS_MODE);
             this.handleLogin(response.ERROR_DESCRIPTION);
         }
         else
