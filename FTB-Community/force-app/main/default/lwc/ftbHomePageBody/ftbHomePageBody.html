@@ -8,7 +8,10 @@
     ondisconnecting={handleConnectionEvent}></c-ftb-home-page-home>
   </section>
   <section if:true={homePage.teamspage}>
-    <h1>TEAM PAGE</h1>
+    <c-ftb-home-page-team
+    onconnecting={handleConnectionEvent}
+    ondisconnecting={handleConnectionEvent}> 
+    </c-ftb-home-page-team>
   </section>
   <section if:true={homePage.standingpage}>
     <h1>STANDING PAGE</h1>

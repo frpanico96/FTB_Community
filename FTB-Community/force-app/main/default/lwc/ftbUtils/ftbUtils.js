@@ -22,7 +22,7 @@ export default class FtbUtils extends NavigationMixin(LightningElement) {
     @api focusObj =
     {
         main: 'c-ftb-home-page-home',
-        teams: undefined,
+        teams: 'c-ftb-home-page-team',
         standings: undefined,
         trades: undefined,
         profile: undefined,
