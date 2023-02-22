@@ -6,3 +6,20 @@
   background-size: cover;
   box-shadow: inset 0 0 0 2000px rgba(0,0,0,0,0.3);
 }
+
+.ftb-player
+{
+  --sds-c-icon-color-background: none;
+}
+.ftb-center
+{ 
+  --sds-c-icon-color-foreground-default: rgb(255, 94, 0);
+}
+.ftb-forward
+{
+  --sds-c-icon-color-foreground-default: rgb(97, 255, 40);
+}
+.ftb-guard
+{
+  --sds-c-icon-color-foreground-default: rgb(249, 246, 37);
+}
