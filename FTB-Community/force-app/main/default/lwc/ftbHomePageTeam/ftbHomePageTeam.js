@@ -8,6 +8,8 @@ import FtbUtils from 'c/ftbUtils';
 export default class FtbHomePageTeam extends FtbUtils
 {
 
+  @track loadingSpinner = true;
+
   @track fetchRequest = false;
 
   @track placeholderCombo = 'Select a Team...';
@@ -19,6 +21,18 @@ export default class FtbHomePageTeam extends FtbUtils
   ];
   @track currentTeam = 'team1';
   
+  @track placeHolderFormation = 'Pick a formation...';
+  @track optionFormation =
+  [
+    {label: '2-2-1', value: 1},
+    {label: '2-1-2', value: 2},
+    {label: '1-2-2', value: 3},
+    {label: '3-1-1', value: 4},
+    {label: '1-3-1', value: 5},
+    {label: '1-1-3', value: 6},
+  ];
+  @track currentFormation;
+
   connectedCallback()
   {
     console.log('### Team Connecting...');
@@ -37,7 +51,7 @@ export default class FtbHomePageTeam extends FtbUtils
     if(this.fetchRequest) return;
 
     this.fetchRequest = true;
-
+    this.loadingSpinner = false;
     console.log('### Fetching Team...');
   }
   @api
@@ -49,5 +63,17 @@ export default class FtbHomePageTeam extends FtbUtils
   handleTeamChange(event)
   {
     console.log('### Changing Team...');
+  }
+  handleFormationChange(event)
+  {
+    console.log('### Changing Formation...');
+
+    let selectedValue =Number(event.detail.value);
+    this.currentFormation = selectedValue;
+    
+    const playCourt = this.template.querySelector('c-ftb-play-court');
+    playCourt.changeFormation(this.optionFormation[this.optionFormation.findIndex(el => el.value === selectedValue)].label);
+
+    console.log('### Formation Changed');
   }
 }

@@ -1,25 +1,42 @@
 <template>
-    <section>
-      <lightning-combobox
-      name="teamCombos"
-      variant="label-hidden"
-      value={currentTeam}
-      placeholder={placeholderCombo}
-      options={optionTeams}
-      onchange={handleTeamChange}>
-      </lightning-combobox>
-    </section>
-    <section>
-      <lightning-layout vertical-align="center" multiple-rows="true" horizontal-align="spread">
-        <lightning-layout-item flexibility="auto" padding="small">
-          <c-ftb-play-court></c-ftb-play-court>
-        </lightning-layout-item>
-        <lightning-layout-item padding="small">
-          Box Bench
-        </lightning-layout-item>
-      </lightning-layout>
-    </section>
-    <section>
-        <h1>Box Real Pairings</h1>
-    </section>
+    <div if:true={loadingSpinner}>
+      <lightning-spinner size="medium" alternative-text="loading..."></lightning-spinner>
+    </div>
+    <div if:false={loadingSpinner}>
+      <section>
+        <lightning-combobox
+        class="slds-var-p-around_small"
+        name="teamCombos"
+        variant="label-hidden"
+        value={currentTeam}
+        placeholder={placeholderCombo}
+        options={optionTeams}
+        onchange={handleTeamChange}>
+        </lightning-combobox>
+      </section>
+      <section>
+        <lightning-layout vertical-align="center" multiple-rows="true" horizontal-align="spread">
+          <lightning-layout-item flexibility="auto" padding="small">
+            <div>
+              <lightning-combobox
+              class="slds-var-p-around_small"
+              name="teamFormation"
+              variant="label-hidden"
+              placeholder={placeHolderFormation}
+              options={optionFormation}
+              value={currentFormation}
+              onchange={handleFormationChange}
+              ></lightning-combobox>
+            </div>
+            <c-ftb-play-court></c-ftb-play-court>
+          </lightning-layout-item>
+          <lightning-layout-item padding="small">
+            Box Bench
+          </lightning-layout-item>
+        </lightning-layout>
+      </section>
+      <section>
+          <h1>Box Real Pairings</h1>
+      </section>
+    </div>
 </template>
