@@ -23,3 +23,7 @@
 {
   --sds-c-icon-color-foreground-default: rgb(249, 246, 37);
 }
+.ftb-hidden
+{
+  --sds-c-icon-color-foreground-default: none;
+}
