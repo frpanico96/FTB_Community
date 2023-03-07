@@ -1,24 +1,30 @@
 <template>
-  <lightning-card title="Box Team">
-    <lightning-layout horizontal-align="space">
-      <lightning-layout-item padding="around-small">
-            <div>
-              <c-ftb-player-box></c-ftb-player-box>
+    <lightning-layout horizontal-align="space" multiple-rows="true">
+      <lightning-layout-item padding="around-small" flexibility="auto">
+        <div class="slds-var-p-around_small">STARTER</div>
+        <template for:each={starterObj} for:item="playerCombo">
+            <div key={playerCombo.id} class="slds-var-p-around_small">
+              <c-ftb-player-box player-opts={playerCombo.opts}></c-ftb-player-box>
             </div>
-            <div>T2</div>
-            <div>T3</div>
-            <div>T4</div>
-            <div>T5</div>
-            <div>T6</div>
+        </template>
+        <div class="slds-var-p-around_small">SIXTH</div>
+        <div class="slds-var-p-around_small">
+          <c-ftb-player-box player-opts={sixth}></c-ftb-player-box>
+        </div>
       </lightning-layout-item>
-      <lightning-layout-item padding="around-small">
-            <div>T1</div>
-            <div>T2</div>
-            <div>T3</div>
-            <div>T4</div>
-            <div>T5</div>
-            <div>T6</div>
-      </lightning-layout-item>
+      <lightning-layout-item padding="around-small" flexibility="auto">
+        <div class="slds-var-p-around_small">BENCH</div>
+        <template for:each={benchObj} for:item="playerCombo">
+          <div key={playerCombo.id} class="slds-var-p-around_small">
+            <c-ftb-player-box player-opts={playerCombo.opts}></c-ftb-player-box>
+          </div>
+        </template>
+        <div class="slds-var-p-around_small">OFF TEAM</div> 
+        <template for:each={offteamObj} for:item="playerCombo">
+          <div key={playerCombo.id} class="slds-var-p-around_small">
+            <c-ftb-player-box player-opts={playerCombo.opts}></c-ftb-player-box>
+          </div>
+        </template>
+     </lightning-layout-item>
     </lightning-layout>  
-  </lightning-card> 
 </template>
